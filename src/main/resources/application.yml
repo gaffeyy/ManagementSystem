@@ -1,0 +1,20 @@
+spring:
+  application:
+    name:DocumentsWenKu
+  # Datasource
+  datasource:
+    url: jdbc:mysql://43.136.173.33:3306/wenku_user
+    username: "gaffey"
+    password: syj4527466
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+# Mybatis
+mybatis-plus:
+  configuration:
+    map-underscore-to-camel-case: false
+  #    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+  global-config:
+    db-config:
+      logic-delete-field: isDelete # ????????????(since 3.3.0,????????????2)
+      logic-delete-value: 1 # ??????(??? 1)
+      logic-not-delete-value: 0 # ??????(??? 0)

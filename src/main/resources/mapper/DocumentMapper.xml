@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wenku.documents_wenku.mapper.DocumentMapper">
+
+    <resultMap id="BaseResultMap" type="com.wenku.documents_wenku.model.domain.Document">
+            <id property="documentId" column="documentId" jdbcType="BIGINT"/>
+            <result property="documentName" column="documentName" jdbcType="VARCHAR"/>
+            <result property="category" column="category" jdbcType="VARCHAR"/>
+            <result property="uploadUserId" column="uploadUserId" jdbcType="BIGINT"/>
+            <result property="uploadTime" column="uploadTime" jdbcType="TIMESTAMP"/>
+            <result property="isDelete" column="isDelete" jdbcType="TINYINT"/>
+            <result property="ducomentUrl" column="ducomentUrl" jdbcType="VARCHAR"/>
+            <result property="tags" column="tags" jdbcType="VARCHAR"/>
+            <result property="likes" column="likes" jdbcType="BIGINT"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        documentId,documentName,category,
+        uploadUserId,uploadTime,isDelete,
+        ducomentUrl,tags,likes
+    </sql>
+</mapper>
