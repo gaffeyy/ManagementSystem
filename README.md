@@ -73,3 +73,4 @@
 > );
 > ```
 
+[在使用springboot时，有哪些类需要注入，哪些类不需要呢？ - 知乎 (zhihu.com)](https://www.zhihu.com/question/439481519)

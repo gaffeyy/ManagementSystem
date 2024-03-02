@@ -7,6 +7,19 @@ spring:
     username: "gaffey"
     password: syj4527466
     driver-class-name: com.mysql.cj.jdbc.Driver
+#  Redis
+  redis:
+    host: 1.14.1.82
+    port: 6379
+    password: 4527466
+    lettuce:
+      pool:
+        max-active: 8
+        max-idle: 8
+        max-wait: -1ms
+        min-idle: 0
+    timeout: 3000
+    database: 0
 
 # Mybatis
 mybatis-plus:
