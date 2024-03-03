@@ -63,4 +63,11 @@ class UserServiceImplTest {
 		Assertions.assertNotEquals(l,-1);
 	}
 
+	@Test
+	void userLogin() {
+		User user = new User();
+		user.setUserAccount("12345");
+		user.setUserPassword("12345");
+//		userService.userLogin();
+	}
 }

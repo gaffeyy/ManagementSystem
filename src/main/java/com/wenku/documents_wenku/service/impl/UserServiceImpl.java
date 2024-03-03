@@ -2,14 +2,21 @@ package com.wenku.documents_wenku.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.wenku.documents_wenku.constant.Constant;
 import com.wenku.documents_wenku.model.domain.User;
 import com.wenku.documents_wenku.service.UserService;
 import com.wenku.documents_wenku.mapper.UserMapper;
+import com.wenku.documents_wenku.utils.CookieUtils;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.util.DigestUtils;
 
 import javax.annotation.Resource;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.util.UUID;
+import java.util.concurrent.TimeUnit;
 
 /**
 * @author gaffey
@@ -23,6 +30,11 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
 	private static final String SALT = "gaffeyUser";  // 盐值,混淆密码
 	@Resource UserMapper userMapper;
 
+	@Resource
+	CookieUtils cookieUtils;
+
+	@Resource
+	RedisTemplate<String,Object> redisTemplate;
 
 	@Override
 	public long userRegesiter(String userAccount, String userPassword, String checkPassword) {
@@ -30,7 +42,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
 			//输入参数有误
 			return -1;
 		}
-		if(userPassword != checkPassword){
+		if(!userPassword.equals(checkPassword)){
 			//输入参数有误
 			return -1;
 		}
@@ -57,39 +69,89 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
 	}
 
 	@Override
-	public User userLogin(String userAccount, String userPassword) {
-		if(userAccount == null || userPassword == null){
-			//输入参数有误
-			return null;
-		}
-		//密码加密
-		String encrptPassword = DigestUtils.md5DigestAsHex((SALT + userPassword).getBytes());
+	public User userLogin(HttpServletRequest request, HttpServletResponse response, String userAccount, String userPassword) {
+//		if(userAccount == null || userPassword == null){
+//			//输入参数有误
+//			return null;
+//		}
 		QueryWrapper<User> queryWrapper = new QueryWrapper<>();
-		queryWrapper.eq("userAccount",userAccount);
-		queryWrapper.eq("userPassword",encrptPassword);
-		User loginUser = userMapper.selectOne(queryWrapper);
-		if(loginUser == null){
-			//未查找到用户
-			return null;
+		Cookie cookie = cookieUtils.getCookie(request, Constant.USER_LOGIN_STATE);
+//		if(cookie == null){
+//			//请求参数有误
+//			return null;
+//		}
+		if(cookie != null &&redisTemplate.hasKey(cookie.getValue())){
+			//已登录
+			queryWrapper.eq("userAccount",redisTemplate.opsForValue().get(cookie.getValue()));
+			User loginedUser = userMapper.selectOne(queryWrapper);
+			System.out.println("已登录");
+			return loginedUser;
 		}else {
+			//未登录,执行登录
+			//密码加密
+			String encrptPassword = DigestUtils.md5DigestAsHex((SALT + userPassword).getBytes());
+			queryWrapper = new QueryWrapper<>();
+			queryWrapper.eq("userAccount",userAccount);
+			queryWrapper.eq("userPassword",encrptPassword);
+			User loginUser = userMapper.selectOne(queryWrapper);
+			String uuid = UUID.randomUUID().toString();
+			//添加cookie
+			cookieUtils.addCookie(request,response, Constant.USER_LOGIN_STATE, uuid, 30 * 60);
+			redisTemplate.opsForValue().set(uuid,loginUser.getUserAccount());
+			redisTemplate.expire(uuid,30, TimeUnit.MINUTES);
+
 			//登录成功
 			return loginUser;
 		}
 	}
 
 	@Override
-	public int userLogout(HttpServletRequest request) {
+	public int userLogout(HttpServletRequest request, HttpServletResponse response) {
+		Cookie cookie = cookieUtils.getCookie(request, Constant.USER_LOGIN_STATE);
+		if(!redisTemplate.hasKey(cookie.getValue())){
+			//未登录
+			return -1;
+		}
+		if(redisTemplate.delete(cookie.getValue())){
+			//移除Cookie
+			cookieUtils.removeCookie(request,response,Constant.USER_LOGIN_STATE);
+			return 1;
+		}
+		//系统异常
 		return 0;
 	}
 
 	@Override
 	public User getCurrentUser(HttpServletRequest request) {
-		return null;
+		String uuid = cookieUtils.getCookieValue(request, Constant.USER_LOGIN_STATE);
+		if(uuid == null){
+			//未登录
+			return null;
+		}
+		Object userAccount = redisTemplate.opsForValue().get(uuid);
+		QueryWrapper<User> queryWrapper = new QueryWrapper<>();
+		queryWrapper.eq("userAccount",(String) userAccount);
+		User currentUser = userMapper.selectOne(queryWrapper);
+		if(currentUser == null){
+			//不存在该用户
+			return null;
+		}
+		return currentUser;
+	}
+
+	@Override
+	public boolean isAdmin(User user) {
+		return user.getUserRole() == Constant.ADMIN_USER ? true : false;
 	}
 
 	@Override
 	public boolean isAdmin(HttpServletRequest request) {
-		return false;
+		User currentUser = getCurrentUser(request);
+		if(currentUser == null){
+			//不存在该用户
+			return false;
+		}
+		return currentUser.getUserRole() == Constant.ADMIN_USER ? true : false;
 	}
 
 	@Override

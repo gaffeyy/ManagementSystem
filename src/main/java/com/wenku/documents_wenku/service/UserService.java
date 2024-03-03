@@ -4,6 +4,7 @@ import com.wenku.documents_wenku.model.domain.User;
 import com.baomidou.mybatisplus.extension.service.IService;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 /**
 * @author gaffey
@@ -24,23 +25,24 @@ public interface UserService extends IService<User> {
 	public long userRegesiter(String userAccount,String userPassword,String checkPassword);
 
 	/**
-	 *
 	 * 用户登录
 	 *
+	 * @param request
+	 * @param response
 	 * @param userAccount
 	 * @param userPassword
 	 * @return 用户脱敏后信息
 	 */
-	public User userLogin(String userAccount,String userPassword);
+	public User userLogin(HttpServletRequest request, HttpServletResponse response,String userAccount, String userPassword);
 
 	/**
-	 *
 	 * 用户注销
 	 *
 	 * @param request
+	 * @param response
 	 * @return 1 - 成功; 0 - 失败
 	 */
-	public int userLogout(HttpServletRequest request);
+	public int userLogout(HttpServletRequest request,HttpServletResponse response);
 
 	/**
 	 *
@@ -50,6 +52,13 @@ public interface UserService extends IService<User> {
 	 * @return 当前登录用户信息
 	 */
 	public User getCurrentUser(HttpServletRequest request);
+
+	/**
+     * 当前用户是否是管理员
+     *
+     * @return 1 - 是; 0 - 否
+     */
+	public boolean isAdmin(User user);
 
 	/**
 	 *
