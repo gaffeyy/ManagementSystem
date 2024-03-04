@@ -69,7 +69,7 @@ public class UserController {
 			//请求参数有误
 			return null;
 		}
-
+//		request.getRequestURL().
 		String userAccount = userLoginBody.getUserAccount();
 		String userPassword = userLoginBody.getUserPassword();
 //		if(StringUtils.isAllBlank(userAccount,userPassword)){

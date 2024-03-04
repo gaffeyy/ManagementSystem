@@ -85,7 +85,6 @@ public class CookieUtils {
 	public boolean removeCookie(HttpServletRequest request,HttpServletResponse response,String name){
 		Cookie cookie = getCookie(request,name);
 		if(cookie != null){
-			System.out.println("将cookieMaxAge设为0: "+cookie.getName());
 			cookie.setMaxAge(0);
 			cookie.setPath("/");
 			/**
