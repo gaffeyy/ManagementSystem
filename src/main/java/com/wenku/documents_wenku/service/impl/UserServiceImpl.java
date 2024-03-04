@@ -7,6 +7,7 @@ import com.wenku.documents_wenku.model.domain.User;
 import com.wenku.documents_wenku.service.UserService;
 import com.wenku.documents_wenku.mapper.UserMapper;
 import com.wenku.documents_wenku.utils.CookieUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.util.DigestUtils;
@@ -82,10 +83,36 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
 //		}
 		if(cookie != null &&redisTemplate.hasKey(cookie.getValue())){
 			//已登录
-			queryWrapper.eq("userAccount",redisTemplate.opsForValue().get(cookie.getValue()));
-			User loginedUser = userMapper.selectOne(queryWrapper);
-			System.out.println("已登录");
-			return loginedUser;
+			if(userAccount == null && userPassword == null){
+				queryWrapper.eq("userAccount",redisTemplate.opsForValue().get(cookie.getValue()));
+				User loginedUser = userMapper.selectOne(queryWrapper);
+				System.out.println("已登录");
+				return loginedUser;
+			}else if(StringUtils.isAnyBlank(userAccount,userPassword)){
+				//请求参数有误
+				return null;
+			}else {
+				//密码加密
+				String encrptPassword = DigestUtils.md5DigestAsHex((SALT + userPassword).getBytes());
+				queryWrapper = new QueryWrapper<>();
+				queryWrapper.eq("userAccount",userAccount);
+				queryWrapper.eq("userPassword",encrptPassword);
+				User loginedUser = userMapper.selectOne(queryWrapper);
+				String uuid = UUID.randomUUID().toString();
+
+				//当前登录账户与所带Cookie登录账户信息不一致，移除其redis登录态
+				if(redisTemplate.delete(cookie.getValue())){
+					//移除Cookie
+					cookieUtils.removeCookie(request,response,Constant.USER_LOGIN_STATE);
+				}
+				//添加cookie
+				cookieUtils.addCookie(request,response, Constant.USER_LOGIN_STATE, uuid, 30 * 60);
+				redisTemplate.opsForValue().set(uuid,loginedUser.getUserAccount());
+				redisTemplate.expire(uuid,30, TimeUnit.MINUTES);
+				//登录成功
+				return loginedUser;
+			}
+
 		}else {
 			//未登录,执行登录
 			//密码加密

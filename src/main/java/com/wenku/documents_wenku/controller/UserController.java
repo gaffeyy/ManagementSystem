@@ -94,7 +94,7 @@ public class UserController {
 		return currentUser;
 	}
 
-	@PostMapping
+	@PostMapping("/logout")
 	public int userLogout(HttpServletRequest request,HttpServletResponse response){
 		int result = userService.userLogout(request, response);
 		return result;
