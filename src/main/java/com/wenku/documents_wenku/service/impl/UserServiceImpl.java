@@ -29,13 +29,14 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
     implements UserService{
 
 	private static final String SALT = "gaffeyUser";  // 盐值,混淆密码
-	@Resource UserMapper userMapper;
+	@Resource
+	private UserMapper userMapper;
 
 	@Resource
-	CookieUtils cookieUtils;
+	private CookieUtils cookieUtils;
 
 	@Resource
-	RedisTemplate<String,Object> redisTemplate;
+	private RedisTemplate<String,Object> redisTemplate;
 
 	@Override
 	public long userRegesiter(String userAccount, String userPassword, String checkPassword) {

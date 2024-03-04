@@ -2,6 +2,8 @@ package com.wenku.documents_wenku.service;
 
 import com.wenku.documents_wenku.model.domain.Document;
 import com.baomidou.mybatisplus.extension.service.IService;
+import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -10,6 +12,7 @@ import java.util.List;
 * @description 针对表【document】的数据库操作Service
 * @createDate 2024-03-02 17:42:31
 */
+@Service
 public interface DocumentService extends IService<Document> {
 
 	/**
@@ -20,11 +23,11 @@ public interface DocumentService extends IService<Document> {
 	 * @param category
 	 * @param uploadUser
 	 * @param documentUrl
-	 * @param tasg
+	 * @param tags
 	 * @return 文档名称
 	 */
 	public String addDocument(String documentName,String category,long uploadUser,
-							  String documentUrl,String tasg);
+							  String documentUrl,String tags);
 
 	/**
 	 *
@@ -64,4 +67,6 @@ public interface DocumentService extends IService<Document> {
 	public List<Document> searchDocumentByTags(String tags);
 
 	// TODO 推荐收藏最高的十个文档
+
+	public String documentUpload(MultipartFile uploadDocument);
 }
