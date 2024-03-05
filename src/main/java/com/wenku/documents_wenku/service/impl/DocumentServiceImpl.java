@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.wenku.documents_wenku.model.domain.Document;
 import com.wenku.documents_wenku.service.DocumentService;
 import com.wenku.documents_wenku.mapper.DocumentMapper;
+import com.wenku.documents_wenku.utils.FtpUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -92,16 +93,35 @@ public class DocumentServiceImpl extends ServiceImpl<DocumentMapper, Document>
 	public String documentUpload(MultipartFile uploadDocument) {
 		String fileOriginalName = uploadDocument.getOriginalFilename();
 		System.out.println(fileOriginalName);
-//		String  fileSavedPath = "D:\\Intellji IDEA\\Database_ManagementSystem\\ManagementSystem\\SavedFile\\";
-//		String DBfileSavedPath = "http://localhost:8081/api/upload/";
-//		java.io.File file = new java.io.File(fileSavedPath+fileOriginalName);
-//		try{
-//			uploadDocument.transferTo(file);
-//			System.out.println("上传成功");
-//			return DBfileSavedPath+fileOriginalName;
-//		}catch(Exception e){
-//			e.printStackTrace();
-//		}
+		FtpUtils ftpUtil = new FtpUtils();
+
+		//给起一个新的文件名称，防止名称重复
+		String newname=new String();
+
+		if(uploadDocument!=null){
+			//文件名称 = 时间戳 + 文件自己的名字；
+			newname = System.currentTimeMillis()+uploadDocument.getOriginalFilename();
+
+			try {
+				//图片上传，调用ftp工具类 image 上传的文件夹名称，newname 图片名称，inputStream
+				boolean hopson = ftpUtil.uploadFileToFtp("Document", newname, uploadDocument.getInputStream());
+				if(hopson) {  //上传成功
+					// 文件信息入库
+                   /* File file = new File();
+                    file.setName(newname);
+                    file.setSize(size);
+                    file.setUrl(url);
+                    file.setMassifId(massifId);
+                    file.setPhoto(path + newname);
+                    .....   等等业务处理
+                    this.insert(dkPhoto);*/
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+				return "error";
+			}
+		}
+//		log.info("文件上传完成==============");
 		return "success";
 	}
 }

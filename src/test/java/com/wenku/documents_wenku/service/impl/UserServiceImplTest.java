@@ -1,18 +1,15 @@
 package com.wenku.documents_wenku.service.impl;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-
 import com.wenku.documents_wenku.model.domain.User;
 import com.wenku.documents_wenku.mapper.UserMapper;
 import com.wenku.documents_wenku.service.UserService;
-import org.assertj.core.api.Assert;
+import com.wenku.documents_wenku.utils.FtpUtils;
+import org.apache.commons.net.ftp.FTPClient;
+import org.apache.tomcat.jni.File;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.cache.CacheProperties;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.data.redis.core.ValueOperations;
 
 import javax.annotation.Resource;
 import java.util.concurrent.TimeUnit;
@@ -51,6 +48,18 @@ class UserServiceImplTest {
 		String value = (String) redisTemplate.opsForValue().get("name");
 		System.out.println(value);
 //		Assertions.assertEquals(value,"gaffey");
+	}
+
+	@Resource
+	private FtpUtils ftpUtil;
+	@Test
+	public void testFtp(){
+		FTPClient ftpClient = ftpUtil.getFtpClient();
+		System.out.println(ftpClient.getRemoteAddress());
+		String myfile = "file";
+		File file = new File();
+
+//		ftpUtil.uploadFileToFtp("/Document",myfile,file);
 	}
 
 	@Test

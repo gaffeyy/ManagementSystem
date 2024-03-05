@@ -40,12 +40,11 @@ public class DocumentController {
 	 */
 	@PostMapping("/upload")
 	public String uploadDocument(HttpServletRequest request,@RequestParam("uploadDocument") MultipartFile uploadDocument){
-		User currentUser = userService.getCurrentUser(request);
-		if(currentUser == null){
-			//未登录
-			return null;
-		}
-
+//		User currentUser = userService.getCurrentUser(request);
+//		if(currentUser == null){
+//			//未登录
+//			return null;
+//		}
 		documentService.documentUpload(uploadDocument);
 		return null;
 	}
