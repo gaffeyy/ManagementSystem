@@ -1,13 +1,12 @@
 package com.wenku.documents_wenku.controller;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.wenku.documents_wenku.model.domain.Document;
 import com.wenku.documents_wenku.model.domain.User;
-import com.wenku.documents_wenku.model.request.DocumentAddBody;
 import com.wenku.documents_wenku.model.request.DocumentDeleteBody;
 import com.wenku.documents_wenku.service.DocumentService;
 import com.wenku.documents_wenku.service.UserService;
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -122,14 +121,17 @@ public class DocumentController {
 	 * @return 文档
 	 */
 	@PostMapping("/searchByName")
-	public List<Document> searchDocumentByName(HttpServletRequest request, @RequestParam("documentName") String documentName){
+	public Page<Document> searchDocumentByName(HttpServletRequest request, @RequestParam("documentName") String documentName,@RequestParam("pageNum") long pageNum,
+											   @RequestParam("pageSize") long pageSize){
 		if(documentName == null){
 			//请求参数有误
 			return null;
 		}
 		String serachName = documentName;
-		List<Document> documentList = documentService.searchDocumentByName(documentName);
-		return documentList;
+		long searchPageNum = pageNum;
+		long searchPageSize = pageSize;
+		Page<Document> documentPage = documentService.searchDocumentByName(documentName, searchPageNum, searchPageSize);
+		return documentPage;
 	}
 
 	/**
@@ -164,14 +166,15 @@ public class DocumentController {
 	 * @return 文档
 	 */
 	@PostMapping("/searchByTags")
-	public List<Document> searchDocumentByTags(HttpServletRequest request,@RequestParam("documentTags") String tags){
+	public Page<Document> searchDocumentByTags(HttpServletRequest request,@RequestParam("documentTags") String tags,@RequestParam("pageNum") long pageNum,
+											   @RequestParam("pageSize") long pageSize){
 		if(tags == null){
 			//请求参数错误
 			return null;
 		}
 		String searchTags = tags;
-		List<Document> documentList = documentService.searchDocumentByTags(searchTags);
-		return documentList;
+		Page<Document> documentPage = documentService.searchDocumentByTags(searchTags, pageNum, pageSize);
+		return documentPage;
 	}
 
 }

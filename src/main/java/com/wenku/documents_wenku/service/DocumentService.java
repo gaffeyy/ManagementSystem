@@ -1,5 +1,6 @@
 package com.wenku.documents_wenku.service;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.wenku.documents_wenku.model.domain.Document;
 import com.baomidou.mybatisplus.extension.service.IService;
 import org.springframework.stereotype.Service;
@@ -40,13 +41,14 @@ public interface DocumentService extends IService<Document> {
 	public Long deleteDocument(long userId,long documentId);
 
 	/**
-	 *
 	 * 根据文档名搜索
 	 *
 	 * @param documentName
+	 * @param pageNum
+	 * @param pageSize
 	 * @return 文档信息
 	 */
-	public List<Document> searchDocumentByName(String documentName);
+	public Page<Document> searchDocumentByName(String documentName,long pageNum,long pageSize);
 
 	/**
 	 *
@@ -58,15 +60,22 @@ public interface DocumentService extends IService<Document> {
 	public Document searchDocumentById(long documentId);
 
 	/**
-	 *
 	 * 根据标签搜索文档
 	 *
 	 * @param tags
+	 * @param pageNum
+	 * @param pageSize
 	 * @return 文档信息
 	 */
-	public List<Document> searchDocumentByTags(String tags);
+	public Page<Document> searchDocumentByTags(String tags,long pageNum,long pageSize);
+
+
+	/**
+	 * 上传文件
+	 * @param uploadDocument
+	 * @return 文件地址URL
+	 */
+	public String documentUpload(MultipartFile uploadDocument);
 
 	// TODO 推荐收藏最高的十个文档
-
-	public String documentUpload(MultipartFile uploadDocument);
 }

@@ -1,5 +1,6 @@
 package com.wenku.documents_wenku.service.impl;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.wenku.documents_wenku.model.domain.Document;
 import com.wenku.documents_wenku.service.DocumentService;
 import org.junit.jupiter.api.Test;
@@ -8,8 +9,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import javax.annotation.Resource;
 
 import java.util.List;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 class DocumentServiceImplTest {
@@ -38,19 +37,28 @@ class DocumentServiceImplTest {
 
 	@Test
 	void searchDocumentByName() {
-		List<Document> documents = documentService.searchDocumentByName("计算机");
-		System.out.println(documents);
+		long start = System.currentTimeMillis();
+		Page<Document> documentPage = documentService.searchDocumentByName("计算机", 22, 22);
+//		System.out.println(documents);
+		long end = System.currentTimeMillis();
+		System.out.println(end - start);
 	}
 
 	@Test
 	void searchDocumentById() {
-		Document document = documentService.searchDocumentById(1);
-		System.out.println(document);
+		long start = System.currentTimeMillis();
+		Document document = documentService.searchDocumentById(1000);
+//		System.out.println(document);
+		long end = System.currentTimeMillis();
+		System.out.println(end - start);
 	}
 
 	@Test
 	void searchDocumentByTags() {
-		List<Document> documents = documentService.searchDocumentByTags("教");
-		System.out.println(documents);
+		long start = System.currentTimeMillis();
+		Page<Document> documentPage = documentService.searchDocumentByTags("教", 10, 10);
+//		System.out.println(documents);
+		long end = System.currentTimeMillis();
+		System.out.println(end - start);
 	}
 }

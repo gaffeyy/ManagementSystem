@@ -1,6 +1,7 @@
 package com.wenku.documents_wenku.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.wenku.documents_wenku.model.domain.Document;
 import com.wenku.documents_wenku.service.DocumentService;
@@ -54,15 +55,16 @@ public class DocumentServiceImpl extends ServiceImpl<DocumentMapper, Document>
 	}
 
 	@Override
-	public List<Document> searchDocumentByName(String documentName) {
+	public Page<Document> searchDocumentByName(String documentName, long pageNum, long pageSize) {
 		QueryWrapper<Document> queryWrapper = new QueryWrapper<>();
 		queryWrapper.like("documentName",documentName);
-		List<Document> searchedDocuments = documentMapper.selectList(queryWrapper);
-		if(searchedDocuments == null){
+		Page<Document> searchPage = this.page(new Page<>(pageNum, pageSize), queryWrapper);
+//		List<Document> searchedDocuments = documentMapper.selectList(queryWrapper);
+		if(searchPage == null){
 			//未查询到相关文档
 			return null;
 		}else {
-			return searchedDocuments;
+			return searchPage;
 		}
 	}
 
@@ -82,11 +84,12 @@ public class DocumentServiceImpl extends ServiceImpl<DocumentMapper, Document>
 	}
 
 	@Override
-	public List<Document> searchDocumentByTags(String tags) {
+	public Page<Document> searchDocumentByTags(String tags, long pageNum, long pageSize) {
 		QueryWrapper<Document> queryWrapper = new QueryWrapper<>();
 		queryWrapper.like("tags",tags);
 		List<Document> selectedDocuments = documentMapper.selectList(queryWrapper);
-		return selectedDocuments;
+		Page<Document> documentPage = this.page(new Page<>(pageNum, pageSize), queryWrapper);
+		return documentPage;
 	}
 
 	@Override
