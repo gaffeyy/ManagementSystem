@@ -1,4 +1,5 @@
 spring:
+
   application:
     name:DocumentsWenKu
   # Datasource
@@ -21,6 +22,7 @@ spring:
     timeout: 3000
     database: 0
 
+
 # Mybatis
 mybatis-plus:
   configuration:
@@ -31,3 +33,9 @@ mybatis-plus:
       logic-delete-field: isDelete # ????????????(since 3.3.0,????????????2)
       logic-delete-value: 1 # ??????(??? 1)
       logic-not-delete-value: 0 # ??????(??? 0)
+
+ftp:
+  hostname: 1.14.1.82
+  port: 21
+  username: ftpuser
+  password: syj4527466
