@@ -39,11 +39,15 @@ public class DocumentController {
 	 */
 	@PostMapping("/upload")
 	public String uploadDocument(HttpServletRequest request,@RequestParam("uploadDocument") MultipartFile uploadDocument){
-//		User currentUser = userService.getCurrentUser(request);
-//		if(currentUser == null){
-//			//未登录
-//			return null;
-//		}
+		User currentUser = userService.getCurrentUser(request);
+		if(currentUser == null){
+			//未登录
+			return null;
+		}
+		if(uploadDocument == null){
+			//请求参数错误
+			return null;
+		}
 		documentService.documentUpload(uploadDocument);
 		return null;
 	}
@@ -74,7 +78,7 @@ public class DocumentController {
 		String dTags = documentTags;
 		String dCategory =category;
 		String documentUrl = modifiedURL;
-		String addedDocument = documentService.addDocument(documentName, category, currentUser.getId(), documentUrl, documentTags);
+		String addedDocument = documentService.addDocument(dName, dCategory, currentUser.getId(), documentUrl, dTags);
 		if(addedDocument == null){
 			//添加失败
 			return null;
@@ -123,14 +127,14 @@ public class DocumentController {
 	@PostMapping("/searchByName")
 	public Page<Document> searchDocumentByName(HttpServletRequest request, @RequestParam("documentName") String documentName,@RequestParam("pageNum") long pageNum,
 											   @RequestParam("pageSize") long pageSize){
-		if(documentName == null){
+		if(documentName == null || pageNum < 1L || pageSize < 1L){
 			//请求参数有误
 			return null;
 		}
 		String serachName = documentName;
 		long searchPageNum = pageNum;
 		long searchPageSize = pageSize;
-		Page<Document> documentPage = documentService.searchDocumentByName(documentName, searchPageNum, searchPageSize);
+		Page<Document> documentPage = documentService.searchDocumentByName(serachName, searchPageNum, searchPageSize);
 		return documentPage;
 	}
 
@@ -168,7 +172,7 @@ public class DocumentController {
 	@PostMapping("/searchByTags")
 	public Page<Document> searchDocumentByTags(HttpServletRequest request,@RequestParam("documentTags") String tags,@RequestParam("pageNum") long pageNum,
 											   @RequestParam("pageSize") long pageSize){
-		if(tags == null){
+		if(tags == null || pageNum < 1L || pageSize < 1L){
 			//请求参数错误
 			return null;
 		}

@@ -27,7 +27,7 @@ public class InsertUserTest {
 					TimeUnit.MINUTES,
 					new ArrayBlockingQueue<>(10000));
 	/**
-	 * 并发批量插入用户
+	 * 并发批量插入数据
 	 */
 	@Test
 	public void doConcurrencyInsertUsers() {
