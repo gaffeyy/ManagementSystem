@@ -201,7 +201,7 @@ public class RedisConfig {
 
 
 
-# 导入批量测试数据
+## 导入批量测试数据
 
 > 并发批量地导入数据
 
@@ -250,15 +250,107 @@ public class RedisConfig {
 
 
 
+## Redis实现用户对文章的收藏点赞
+
+> 在Redis中为文章维护两个Set，目的是实现用户对文章只能进行一次点赞操作和一次收藏操作。
+>
+> Key：  document：collect：documentId	Value：userId
+>
+> Key： document：like：documentId		Value：userId
+>
+> 在Redis维护一个Hash，目的是用户浏览文章或点赞文章，Hash中的field自增；请求不会直接去修改数据库，减少数据库压力。而是由Redis定期去修改数据库数据（浏览量和点赞数）
+>
+> Key：  document：docuemntId	filed：readcount	likecount
+
+```shell
+# 用户userId1点赞后，加入到集合中
+redisTemplate.opsForSet().add("document:like:documentId","userId1");
+
+# 用户userId1收藏后
+redisTemplate.opsForSet().add("document:collect:documentId","userId1");
+
+# 用户浏览文章后，文档浏览记录加一
+redisTemplate.opsForHash().increment("document:count:ducomentId","readcount",1);
+# 用户浏览文章后，文档点赞加一
+redisTemplate.opsForHash().increment("document:count:documentId","likecount",1);
+```
 
 
 
+## 每日推荐点赞数最高的十篇文档
+
+> 因为是主页推荐，所以每个用户至少会推荐一次，如果每次都从数据库取，那么会增大数据库的压力。
+>
+> 可以在Redis中维护一个List，里面缓存推荐的十篇文档。
+>
+> 使用定时任务进行缓存预热。
+
+```java
+// 查出点赞数最高的十篇
+List<document> top10 = new Arraylist<>();
+redisTemplate.opsForList().leftPushAll("user",top10);
+//取出top10文档
+top10 = redisTemplate.opsForList().range("user", 0, 5);
+```
+
+> 定时任务
+>
+> 使用SpringBoot中的  @Scheduled（！！注意要在springboot启动类中打上@EnableScheduled注解）
+
+
+
+## 实现分布式锁
+
+> 分布式锁的作用
+
+1. 控制某个时刻，只有少数进程能够抢到有限资源
+2. Synchronized锁也能起到1）的作用，但是它之对当个JVM有效，也就是说如果要限制几个服务器的话，就需要分布式锁来解决。
+
+> 分布式锁的实现
+
+1. 使用Redis直接实现
+
+> setn nx  + lua脚本(原子执行)
+
+！！！ 注意事项
+
+* 用完锁要及时释放
+* 锁要加上过期时间
+* 对锁实现续期
+
+
+
+
+
+2. 使用Redisson实现
+
+> Redission是什么
+
+
+
+> Redission的看门狗机制
 
 
 
 # Plan
 
-1. Redis缓存：缓存最热门的文档（点赞最多或浏览最多）；缓存用户的浏览记录（可以缓存最近的二十条记录，采用LRU策略淘汰）
-   1. 使用定时任务进行缓存预热
+1. Redis缓存： 用户收藏 Set  key—document：collect：documentId  value—收藏该文档的userID
+
+   ​		数据库   ID	userID	documentID
+
+   ​		缓存  被收藏数前10	使用定时任务进行缓存预热
+
+   Redis：用户浏览、点赞  Hash	key—document：docuemntId	read—浏览量  like—点赞数	定期更新数据库内容
+
+   ​	
+
 2. Redis分布式锁：只有一个服务获得锁来进行缓存预热
-3. SQL查询效率优化：EXPLAN分析查询计划；采用索引优化
+
+​	
+
+1. SQL查询效率优化：EXPLAN分析查询计划；采用索引优化
+
+
+
+[使用Redis实现文章阅读量、收藏、点赞数量记录功能_redis实现点赞,收藏,评论-CSDN博客](https://blog.csdn.net/weixin_44606481/article/details/134284550?spm=1001.2101.3001.6650.1&utm_medium=distribute.pc_relevant.none-task-blog-2~default~CTRLIST~Rate-1-134284550-blog-130578771.235^v43^pc_blog_bottom_relevance_base8&depth_1-utm_source=distribute.pc_relevant.none-task-blog-2~default~CTRLIST~Rate-1-134284550-blog-130578771.235^v43^pc_blog_bottom_relevance_base8&utm_relevant_index=2)
+

@@ -4,7 +4,6 @@ import com.wenku.documents_wenku.model.domain.Document;
 import com.wenku.documents_wenku.service.DocumentService;
 
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.util.StopWatch;
 
@@ -14,7 +13,7 @@ import java.util.List;
 import java.util.concurrent.*;
 
 @SpringBootTest
-public class InsertUserTest {
+public class InsertTest {
 
 	@Resource
 	private DocumentService documentService;

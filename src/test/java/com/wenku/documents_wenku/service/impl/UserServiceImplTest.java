@@ -12,6 +12,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.redis.core.RedisTemplate;
 
 import javax.annotation.Resource;
+import java.util.List;
+import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
 @SpringBootTest
@@ -46,7 +48,34 @@ class UserServiceImplTest {
 
 // 获取值
 		String value = (String) redisTemplate.opsForValue().get("name");
-		System.out.println(value);
+		Set keys = redisTemplate.keys("*");
+		List<String> list = keys.stream().toList();
+		System.out.println(list.toString());
+		String hkey = "document:count:1";
+		String readcount = "readcount";
+		String likescount = "likescount";
+//		redisTemplate.opsForHash().increment(hkey,readcount,1);
+		Object rc = redisTemplate.opsForHash().get("document:count:1", "readcount");
+		System.out.println(rc);
+		System.out.println("=================");
+		redisTemplate.opsForSet().add("document:collect:documentId","userId1");
+		Boolean userId1 = redisTemplate.opsForSet().isMember("document:collect:documentId", "userId2");
+		System.out.println(userId1);
+//		redisTemplate.opsForHash().put("document:count:1","readcount",1);
+//		redisTemplate.opsForHash().put("document:count:1","likescount",1);
+		Object readcount1 = redisTemplate.opsForHash().get("document:count:1", "readcount");
+		String s = readcount1.toString();
+		System.out.println(readcount1);
+//		System.out.println(readcount1.getClass());
+		redisTemplate.opsForHash().increment("document:count:1","readcount",1);
+
+		redisTemplate.opsForList().leftPushAll("user","1","2","2");
+		List user = redisTemplate.opsForList().range("user", 0, 5);
+		System.out.println(user);
+//		readcount1 = redisTemplate.opsForHash().get("document:count:1", "readcount");
+//		System.out.println(readcount1);
+//		System.out.println(list.get(2));
+//		System.out.println(value);
 //		Assertions.assertEquals(value,"gaffey");
 	}
 
