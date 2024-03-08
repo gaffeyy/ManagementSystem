@@ -1,13 +1,19 @@
 package com.wenku.documents_wenku.service.impl;
+import java.util.Date;
 
+import com.wenku.documents_wenku.constant.RedisConstant;
+import com.wenku.documents_wenku.model.domain.Document;
 import com.wenku.documents_wenku.model.domain.User;
 import com.wenku.documents_wenku.mapper.UserMapper;
+import com.wenku.documents_wenku.service.DocumentService;
 import com.wenku.documents_wenku.service.UserService;
 import com.wenku.documents_wenku.utils.FtpUtils;
 import org.apache.commons.net.ftp.FTPClient;
 import org.apache.tomcat.jni.File;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+import org.redisson.api.RList;
+import org.redisson.api.RedissonClient;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.redis.core.RedisTemplate;
 
@@ -26,9 +32,15 @@ class UserServiceImplTest {
 	RedisTemplate redisTemplate;
 
 	@Resource
+	DocumentService documentService;
+
+	@Resource
 	RedisTemplate<String,Object> redisTemplate1;
 	@Resource
 	UserService userService;
+
+	@Resource
+	RedissonClient redissonClient;
 	@Test
 	public void testMysql(){
 		User user = new User();
@@ -38,45 +50,33 @@ class UserServiceImplTest {
 	}
 	@Test
 	public void testRedis(){
-//		ObjectMapper objectMapper = new ObjectMapper();
-//		ValueOperations ops = redisTemplate.opsForValue();
-//		ops.set("uu22id","12234");
-//		redisTemplate.expire("uuid",30, TimeUnit.MINUTES);
-		// 设置键值对
-		redisTemplate1.opsForValue().set("name", "kkkkk");
-		redisTemplate1.expire("name",30,TimeUnit.SECONDS);
+		List<Document> documents = documentService.recommednDocument();
 
-// 获取值
-		String value = (String) redisTemplate.opsForValue().get("name");
-		Set keys = redisTemplate.keys("*");
-		List<String> list = keys.stream().toList();
-		System.out.println(list.toString());
-		String hkey = "document:count:1";
-		String readcount = "readcount";
-		String likescount = "likescount";
-//		redisTemplate.opsForHash().increment(hkey,readcount,1);
-		Object rc = redisTemplate.opsForHash().get("document:count:1", "readcount");
-		System.out.println(rc);
-		System.out.println("=================");
-		redisTemplate.opsForSet().add("document:collect:documentId","userId1");
-		Boolean userId1 = redisTemplate.opsForSet().isMember("document:collect:documentId", "userId2");
-		System.out.println(userId1);
-//		redisTemplate.opsForHash().put("document:count:1","readcount",1);
-//		redisTemplate.opsForHash().put("document:count:1","likescount",1);
-		Object readcount1 = redisTemplate.opsForHash().get("document:count:1", "readcount");
-		String s = readcount1.toString();
-		System.out.println(readcount1);
-//		System.out.println(readcount1.getClass());
-		redisTemplate.opsForHash().increment("document:count:1","readcount",1);
+//		redisTemplate.opsForList().set(RedisConstant.RECOMEND_TOP_DOCUMENT,0,document);
+		int size = documents.size();
+//		System.out.println(size);
+//		for(int i = 0;i < size;i++){
+//			redisTemplate.opsForList().leftPush(RedisConstant.RECOMEND_TOP_DOCUMENT,documents.get(i));
+//		}
+		Long size1 = redisTemplate.opsForList().size(RedisConstant.RECOMEND_TOP_DOCUMENT);
+		List<Document> range = redisTemplate.opsForList().range(RedisConstant.RECOMEND_TOP_DOCUMENT, 0, size1);
+		System.out.println(range);
+		RList<Document> list = redissonClient.getList(RedisConstant.RECOMEND_TOP_DOCUMENT);
+		System.out.println(list);
+//		redisTemplate.opsForList().leftPushAll(documents);
 
-		redisTemplate.opsForList().leftPushAll("user","1","2","2");
-		List user = redisTemplate.opsForList().range("user", 0, 5);
-		System.out.println(user);
-//		readcount1 = redisTemplate.opsForHash().get("document:count:1", "readcount");
-//		System.out.println(readcount1);
-//		System.out.println(list.get(2));
-//		System.out.println(value);
-//		Assertions.assertEquals(value,"gaffey");
+	}
+	@Test
+	public void removeReidi(){
+		Long size = redisTemplate.opsForList().size(RedisConstant.RECOMEND_TOP_DOCUMENT);
+		System.out.println(size);
+		for(int i =0;i <size;i++){
+			redisTemplate.opsForList().leftPop(RedisConstant.RECOMEND_TOP_DOCUMENT);
+
+		}
+		Long size1= redisTemplate.opsForList().size(RedisConstant.RECOMEND_TOP_DOCUMENT);
+		System.out.println(size1);
+
 	}
 
 	@Resource
@@ -107,5 +107,17 @@ class UserServiceImplTest {
 		user.setUserAccount("12345");
 		user.setUserPassword("12345");
 //		userService.userLogin();
+	}
+
+	@Test
+	void setLike() {
+		long docuemntId = 1;
+		long userId = 2;
+		Object l = userService.setLike(docuemntId, userId);
+		System.out.println(l);
+	}
+
+	@Test
+	void unSetLike() {
 	}
 }

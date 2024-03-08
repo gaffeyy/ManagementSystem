@@ -10,6 +10,7 @@ import org.springframework.util.StopWatch;
 import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 import java.util.concurrent.*;
 
 @SpringBootTest
@@ -17,6 +18,8 @@ public class InsertTest {
 
 	@Resource
 	private DocumentService documentService;
+	@Resource
+	Random random;
 
 
 	private ExecutorService executorService =
@@ -33,7 +36,7 @@ public class InsertTest {
 		StopWatch stopWatch = new StopWatch();
 		stopWatch.start();
 		// 分十组
-		int batchSize = 1000;
+		int batchSize = 100;
 		int j = 0;
 		List<CompletableFuture<Void>> futureList = new ArrayList<>();
 		for (int i = 0; i < 10; i++) {
@@ -46,7 +49,7 @@ public class InsertTest {
 				document.setUploadUserId(1L);
 				document.setDucomentUrl("http://document.com");
 				document.setTags("[Tags]");
-				document.setLikes(10L);
+				document.setLikes(random.nextLong(i));
 				documentList.add(document);
 				if (j % batchSize == 0) {
 					break;

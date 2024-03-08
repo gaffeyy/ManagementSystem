@@ -35,7 +35,7 @@ public class DocumentController {
 	 *
 	 * @param request
 	 * @param uploadDocument
-	 * @return 文件
+	 * @return 文档
 	 */
 	@PostMapping("/upload")
 	public String uploadDocument(HttpServletRequest request,@RequestParam("uploadDocument") MultipartFile uploadDocument){
@@ -53,7 +53,7 @@ public class DocumentController {
 	}
 
 	/**
-	 * 上传文档接口
+	 * 添加文档接口
 	 * @param request
 	 * @param uploadDocument
 	 * @param documentName

@@ -3,11 +3,14 @@ package com.wenku.documents_wenku.service.impl;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.wenku.documents_wenku.constant.RedisConstant;
 import com.wenku.documents_wenku.model.domain.Document;
 import com.wenku.documents_wenku.service.DocumentService;
 import com.wenku.documents_wenku.mapper.DocumentMapper;
 import com.wenku.documents_wenku.utils.FtpUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.redisson.api.RList;
+import org.redisson.api.RedissonClient;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -25,6 +28,9 @@ public class DocumentServiceImpl extends ServiceImpl<DocumentMapper, Document>
 
 	@Resource
 	private DocumentMapper documentMapper;
+
+	@Resource
+	private RedissonClient redissionClient;
 
 	@Override
 	public String addDocument(String documentName, String category, long uploadUser, String documentUrl, String tags) {
@@ -126,6 +132,18 @@ public class DocumentServiceImpl extends ServiceImpl<DocumentMapper, Document>
 		}
 //		log.info("文件上传完成==============");
 		return "success";
+	}
+
+	@Override
+	public List<Document> recommednDocument() {
+		List<Document> documents = documentMapper.selectTopTenDocument();
+		return documents;
+	}
+
+	@Override
+	public List<Document> redommendFromRedis() {
+		RList<Document> list = redissionClient.getList(RedisConstant.RECOMEND_TOP_DOCUMENT);
+		return list;
 	}
 }
 

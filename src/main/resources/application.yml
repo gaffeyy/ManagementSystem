@@ -39,3 +39,6 @@ ftp:
   port: 21
   username: ftpuser
   password: syj4527466
+logging:
+  file:
+    name: Wenku_log.log

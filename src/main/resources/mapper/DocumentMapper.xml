@@ -19,6 +19,6 @@
     <sql id="Base_Column_List">
         documentId,documentName,category,
         uploadUserId,uploadTime,isDelete,
-        ducomentUrl,tags,likes
+        ducomentUrl,tags,likes,browser
     </sql>
 </mapper>

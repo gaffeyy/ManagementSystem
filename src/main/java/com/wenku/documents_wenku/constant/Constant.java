@@ -25,4 +25,6 @@ public class Constant {
 	 * 用户登录凭证
 	 */
 	public static final String USER_LOGIN_TOKEN = "token";
+
+
 }

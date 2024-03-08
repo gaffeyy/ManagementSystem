@@ -2,6 +2,9 @@ package com.wenku.documents_wenku.mapper;
 
 import com.wenku.documents_wenku.model.domain.Document;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import org.apache.ibatis.annotations.Select;
+
+import java.util.List;
 
 /**
 * @author gaffey
@@ -10,7 +13,8 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 * @Entity generator.domain.Document
 */
 public interface DocumentMapper extends BaseMapper<Document> {
-
+	@Select("select * from document order by likes desc limit 10")
+	public List<Document> selectTopTenDocument();
 }
 
 

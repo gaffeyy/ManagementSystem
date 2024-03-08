@@ -70,20 +70,19 @@ public interface UserService extends IService<User> {
 	public boolean isAdmin(HttpServletRequest request);
 
 	/**
-	 *
-	 * 给文档点赞
+	 * 给文档点赞（如果点过赞则取消点赞）
 	 *
 	 * @param documentId
-	 * @return 文档名称
+	 * @param userId
+	 * @return 该文档当前的总赞数
 	 */
-	public String setLike(long documentId);
+	public Long setLike(long documentId,long userId);
 
 	/**
-	 *
-	 * 给文档取消点赞
-	 *
+	 * 记录浏览文档
 	 * @param documentId
-	 * @return
+	 * @param userId
+	 * @return 文档ID
 	 */
-	public String unSetLike(long documentId);
+	public Long setBrowser(Long documentId, long userId);
 }

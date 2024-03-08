@@ -1,16 +1,25 @@
 package com.wenku.documents_wenku.service.impl;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.wenku.documents_wenku.constant.RedisConstant;
 import com.wenku.documents_wenku.model.domain.Document;
 import com.wenku.documents_wenku.service.DocumentService;
+import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
+import org.redisson.api.RLock;
+import org.redisson.api.RedissonClient;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.redis.core.RedisTemplate;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 @SpringBootTest
+@Slf4j
 class DocumentServiceImplTest {
 
 	@Resource
@@ -60,5 +69,52 @@ class DocumentServiceImplTest {
 //		System.out.println(documents);
 		long end = System.currentTimeMillis();
 		System.out.println(end - start);
+	}
+
+	@Test
+	void recomentDocument() {
+	}
+
+	@Test
+	void redommendFromRedis() {
+		List<Document> documents = documentService.redommendFromRedis();
+		System.out.println(documents);
+	}
+
+	@Resource
+	RedissonClient redissonClient;
+	@Resource
+	RedisTemplate redisTemplate;
+	@Test
+	void testSche(){
+		System.out.println("start");
+		RLock rLock = redissonClient.getLock("wenku:doCacheRecommendDocument:lock");
+		try{
+			List<Document> recomendList = new ArrayList<>();
+			int size = 0;
+			if(rLock.tryLock(0,-1, TimeUnit.MILLISECONDS)){
+				Long originSize = redisTemplate.opsForList().size(RedisConstant.RECOMEND_TOP_DOCUMENT);
+				for (int i = 0;i < originSize;i++){
+					redisTemplate.opsForList().leftPop(RedisConstant.RECOMEND_TOP_DOCUMENT);
+				}
+				log.info(Thread.currentThread().getId()+"get lock");
+				recomendList = documentService.recommednDocument();
+				size = recomendList.size();
+			}
+			try{
+				for(int i = 0;i < size;i++){
+					redisTemplate.opsForList().leftPush(RedisConstant.RECOMEND_TOP_DOCUMENT,recomendList.get(i));
+				}
+			}catch(Exception e){
+				log.error("Redis set key Error",e);
+			}
+		}catch(Exception e){
+			log.error("doCacheRecommendDocument Error",e);
+		}finally {
+			if (rLock.isHeldByCurrentThread()){
+				rLock.unlock();
+				log.info(Thread.currentThread().getId()+"unlocck");
+			}
+		}
 	}
 }

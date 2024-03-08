@@ -252,7 +252,7 @@ public class RedisConfig {
 
 ## Redis实现用户对文章的收藏点赞
 
-> 在Redis中为文章维护两个Set，目的是实现用户对文章只能进行一次点赞操作和一次收藏操作。
+> 在Redis中为文章维护Set，目的是实现用户对文章只能进行一次点赞操作
 >
 > Key：  document：collect：documentId	Value：userId
 >
@@ -271,7 +271,7 @@ redisTemplate.opsForSet().add("document:collect:documentId","userId1");
 
 # 用户浏览文章后，文档浏览记录加一
 redisTemplate.opsForHash().increment("document:count:ducomentId","readcount",1);
-# 用户浏览文章后，文档点赞加一
+# 用户点赞文章后，文档点赞加一
 redisTemplate.opsForHash().increment("document:count:documentId","likecount",1);
 ```
 
@@ -351,6 +351,4 @@ top10 = redisTemplate.opsForList().range("user", 0, 5);
 1. SQL查询效率优化：EXPLAN分析查询计划；采用索引优化
 
 
-
-[使用Redis实现文章阅读量、收藏、点赞数量记录功能_redis实现点赞,收藏,评论-CSDN博客](https://blog.csdn.net/weixin_44606481/article/details/134284550?spm=1001.2101.3001.6650.1&utm_medium=distribute.pc_relevant.none-task-blog-2~default~CTRLIST~Rate-1-134284550-blog-130578771.235^v43^pc_blog_bottom_relevance_base8&depth_1-utm_source=distribute.pc_relevant.none-task-blog-2~default~CTRLIST~Rate-1-134284550-blog-130578771.235^v43^pc_blog_bottom_relevance_base8&utm_relevant_index=2)
 

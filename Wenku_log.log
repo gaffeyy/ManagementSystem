@@ -1,0 +1,219 @@
+2024-03-09 00:20:36.646  INFO 21400 --- [restartedMain] c.w.d.DocumentsWenKuApplication          : Starting DocumentsWenKuApplication using Java 20 on DeskTop-GaFfEy with PID 21400 (D:\Java_Project\Document_WenKu\document_wenku\target\classes started by GaffEy in D:\Java_Project\Document_WenKu\document_wenku)
+2024-03-09 00:20:36.647  INFO 21400 --- [restartedMain] c.w.d.DocumentsWenKuApplication          : No active profile set, falling back to 1 default profile: "default"
+2024-03-09 00:20:36.685  INFO 21400 --- [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2024-03-09 00:20:36.685  INFO 21400 --- [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2024-03-09 00:20:37.110  INFO 21400 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode!
+2024-03-09 00:20:37.112  INFO 21400 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2024-03-09 00:20:37.126  INFO 21400 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 6 ms. Found 0 Redis repository interfaces.
+2024-03-09 00:20:37.568  INFO 21400 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8080 (http)
+2024-03-09 00:20:37.576  INFO 21400 --- [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2024-03-09 00:20:37.576  INFO 21400 --- [restartedMain] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.58]
+2024-03-09 00:20:37.621  INFO 21400 --- [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2024-03-09 00:20:37.621  INFO 21400 --- [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 935 ms
+2024-03-09 00:20:38.054  INFO 21400 --- [restartedMain] org.redisson.Version                     : Redisson 3.17.5
+2024-03-09 00:20:38.248  INFO 21400 --- [redisson-netty-2-9] o.r.c.pool.MasterPubSubConnectionPool    : 1 connections initialized for 1.14.1.82/1.14.1.82:6379
+2024-03-09 00:20:38.381  INFO 21400 --- [redisson-netty-2-19] o.r.c.pool.MasterConnectionPool          : 24 connections initialized for 1.14.1.82/1.14.1.82:6379
+2024-03-09 00:20:38.820  INFO 21400 --- [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
+2024-03-09 00:20:38.843  INFO 21400 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8080 (http) with context path ''
+2024-03-09 00:20:38.852  INFO 21400 --- [restartedMain] c.w.d.DocumentsWenKuApplication          : Started DocumentsWenKuApplication in 2.497 seconds (JVM running for 2.97)
+2024-03-09 00:21:44.432  INFO 21400 --- [http-nio-8080-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2024-03-09 00:21:44.433  INFO 21400 --- [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2024-03-09 00:21:44.434  INFO 21400 --- [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 1 ms
+2024-03-09 00:21:44.544  INFO 21400 --- [http-nio-8080-exec-1] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2024-03-09 00:21:44.775  INFO 21400 --- [http-nio-8080-exec-1] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2024-03-09 00:21:56.018  INFO 21400 --- [Thread-5] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2024-03-09 00:21:56.066  INFO 21400 --- [Thread-5] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+2024-03-09 00:21:56.125  INFO 21400 --- [restartedMain] c.w.d.DocumentsWenKuApplication          : Starting DocumentsWenKuApplication using Java 20 on DeskTop-GaFfEy with PID 21400 (D:\Java_Project\Document_WenKu\document_wenku\target\classes started by GaffEy in D:\Java_Project\Document_WenKu\document_wenku)
+2024-03-09 00:21:56.125  INFO 21400 --- [restartedMain] c.w.d.DocumentsWenKuApplication          : No active profile set, falling back to 1 default profile: "default"
+2024-03-09 00:21:56.231  INFO 21400 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode!
+2024-03-09 00:21:56.231  INFO 21400 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2024-03-09 00:21:56.235  INFO 21400 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 4 ms. Found 0 Redis repository interfaces.
+2024-03-09 00:21:56.319  INFO 21400 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8080 (http)
+2024-03-09 00:21:56.320  INFO 21400 --- [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2024-03-09 00:21:56.320  INFO 21400 --- [restartedMain] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.58]
+2024-03-09 00:21:56.330  INFO 21400 --- [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2024-03-09 00:21:56.330  INFO 21400 --- [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 203 ms
+2024-03-09 00:21:56.416  INFO 21400 --- [restartedMain] org.redisson.Version                     : Redisson 3.17.5
+2024-03-09 00:21:56.455  INFO 21400 --- [redisson-netty-8-9] o.r.c.pool.MasterPubSubConnectionPool    : 1 connections initialized for 1.14.1.82/1.14.1.82:6379
+2024-03-09 00:21:56.555  INFO 21400 --- [redisson-netty-8-19] o.r.c.pool.MasterConnectionPool          : 24 connections initialized for 1.14.1.82/1.14.1.82:6379
+2024-03-09 00:21:56.676  INFO 21400 --- [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
+2024-03-09 00:21:56.686  INFO 21400 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8080 (http) with context path ''
+2024-03-09 00:21:56.690  INFO 21400 --- [restartedMain] c.w.d.DocumentsWenKuApplication          : Started DocumentsWenKuApplication in 0.584 seconds (JVM running for 80.806)
+2024-03-09 00:21:56.691  INFO 21400 --- [restartedMain] .ConditionEvaluationDeltaLoggingListener : Condition evaluation unchanged
+2024-03-09 00:23:21.779  INFO 21400 --- [http-nio-8080-exec-2] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2024-03-09 00:23:21.779  INFO 21400 --- [http-nio-8080-exec-2] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2024-03-09 00:23:21.780  INFO 21400 --- [http-nio-8080-exec-2] o.s.web.servlet.DispatcherServlet        : Completed initialization in 1 ms
+2024-03-09 00:23:21.783  INFO 21400 --- [http-nio-8080-exec-2] c.w.d.controller.UserController          : login
+2024-03-09 00:23:21.818  INFO 21400 --- [http-nio-8080-exec-2] com.zaxxer.hikari.HikariDataSource       : HikariPool-2 - Starting...
+2024-03-09 00:23:21.871  INFO 21400 --- [http-nio-8080-exec-2] com.zaxxer.hikari.HikariDataSource       : HikariPool-2 - Start completed.
+2024-03-09 00:23:35.357  INFO 21400 --- [http-nio-8080-exec-1] c.w.d.controller.UserController          : login
+2024-03-09 00:24:17.058  INFO 21400 --- [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-2 - Shutdown initiated...
+2024-03-09 00:24:17.104  INFO 21400 --- [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-2 - Shutdown completed.
+2024-03-09 00:24:20.243  INFO 20340 --- [restartedMain] c.w.d.DocumentsWenKuApplication          : Starting DocumentsWenKuApplication using Java 20 on DeskTop-GaFfEy with PID 20340 (D:\Java_Project\Document_WenKu\document_wenku\target\classes started by GaffEy in D:\Java_Project\Document_WenKu\document_wenku)
+2024-03-09 00:24:20.244  INFO 20340 --- [restartedMain] c.w.d.DocumentsWenKuApplication          : No active profile set, falling back to 1 default profile: "default"
+2024-03-09 00:24:20.281  INFO 20340 --- [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2024-03-09 00:24:20.282  INFO 20340 --- [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2024-03-09 00:24:20.678  INFO 20340 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode!
+2024-03-09 00:24:20.680  INFO 20340 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2024-03-09 00:24:20.695  INFO 20340 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 5 ms. Found 0 Redis repository interfaces.
+2024-03-09 00:24:21.119  INFO 20340 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8080 (http)
+2024-03-09 00:24:21.126  INFO 20340 --- [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2024-03-09 00:24:21.126  INFO 20340 --- [restartedMain] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.58]
+2024-03-09 00:24:21.168  INFO 20340 --- [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2024-03-09 00:24:21.168  INFO 20340 --- [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 886 ms
+2024-03-09 00:24:21.540  INFO 20340 --- [restartedMain] org.redisson.Version                     : Redisson 3.17.5
+2024-03-09 00:24:21.721  INFO 20340 --- [redisson-netty-2-9] o.r.c.pool.MasterPubSubConnectionPool    : 1 connections initialized for 1.14.1.82/1.14.1.82:6379
+2024-03-09 00:24:21.845  INFO 20340 --- [redisson-netty-2-19] o.r.c.pool.MasterConnectionPool          : 24 connections initialized for 1.14.1.82/1.14.1.82:6379
+2024-03-09 00:24:22.006  WARN 20340 --- [restartedMain] ConfigServletWebServerApplicationContext : Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'preCacheJob' defined in file [D:\Java_Project\Document_WenKu\document_wenku\target\classes\com\wenku\documents_wenku\job\PreCacheJob.class]: Initialization of bean failed; nested exception is java.lang.IllegalStateException: Encountered invalid @Scheduled method 'doCacheRecommendDocument': Invalid value for HourOfDay (valid values 0 - 23): 26 '26' in cron expression "0 0 26 * * *"
+2024-03-09 00:24:22.026  INFO 20340 --- [restartedMain] o.apache.catalina.core.StandardService   : Stopping service [Tomcat]
+2024-03-09 00:24:22.034  INFO 20340 --- [restartedMain] ConditionEvaluationReportLoggingListener : 
+
+Error starting ApplicationContext. To display the conditions report re-run your application with 'debug' enabled.
+2024-03-09 00:24:22.047 ERROR 20340 --- [restartedMain] o.s.boot.SpringApplication               : Application run failed
+
+org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'preCacheJob' defined in file [D:\Java_Project\Document_WenKu\document_wenku\target\classes\com\wenku\documents_wenku\job\PreCacheJob.class]: Initialization of bean failed; nested exception is java.lang.IllegalStateException: Encountered invalid @Scheduled method 'doCacheRecommendDocument': Invalid value for HourOfDay (valid values 0 - 23): 26 '26' in cron expression "0 0 26 * * *"
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:628) ~[spring-beans-5.3.16.jar:5.3.16]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:542) ~[spring-beans-5.3.16.jar:5.3.16]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:335) ~[spring-beans-5.3.16.jar:5.3.16]
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:234) ~[spring-beans-5.3.16.jar:5.3.16]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:333) ~[spring-beans-5.3.16.jar:5.3.16]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:208) ~[spring-beans-5.3.16.jar:5.3.16]
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.preInstantiateSingletons(DefaultListableBeanFactory.java:953) ~[spring-beans-5.3.16.jar:5.3.16]
+	at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:918) ~[spring-context-5.3.16.jar:5.3.16]
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:583) ~[spring-context-5.3.16.jar:5.3.16]
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.refresh(ServletWebServerApplicationContext.java:145) ~[spring-boot-2.6.4.jar:2.6.4]
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:740) ~[spring-boot-2.6.4.jar:2.6.4]
+	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:415) ~[spring-boot-2.6.4.jar:2.6.4]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:303) ~[spring-boot-2.6.4.jar:2.6.4]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1312) ~[spring-boot-2.6.4.jar:2.6.4]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1301) ~[spring-boot-2.6.4.jar:2.6.4]
+	at com.wenku.documents_wenku.DocumentsWenKuApplication.main(DocumentsWenKuApplication.java:14) ~[classes/:na]
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:104) ~[na:na]
+	at java.base/java.lang.reflect.Method.invoke(Method.java:578) ~[na:na]
+	at org.springframework.boot.devtools.restart.RestartLauncher.run(RestartLauncher.java:49) ~[spring-boot-devtools-2.6.4.jar:2.6.4]
+Caused by: java.lang.IllegalStateException: Encountered invalid @Scheduled method 'doCacheRecommendDocument': Invalid value for HourOfDay (valid values 0 - 23): 26 '26' in cron expression "0 0 26 * * *"
+	at org.springframework.scheduling.annotation.ScheduledAnnotationBeanPostProcessor.processScheduled(ScheduledAnnotationBeanPostProcessor.java:518) ~[spring-context-5.3.16.jar:5.3.16]
+	at org.springframework.scheduling.annotation.ScheduledAnnotationBeanPostProcessor.lambda$null$1(ScheduledAnnotationBeanPostProcessor.java:380) ~[spring-context-5.3.16.jar:5.3.16]
+	at java.base/java.lang.Iterable.forEach(Iterable.java:75) ~[na:na]
+	at org.springframework.scheduling.annotation.ScheduledAnnotationBeanPostProcessor.lambda$postProcessAfterInitialization$2(ScheduledAnnotationBeanPostProcessor.java:380) ~[spring-context-5.3.16.jar:5.3.16]
+	at java.base/java.util.LinkedHashMap.forEach(LinkedHashMap.java:729) ~[na:na]
+	at org.springframework.scheduling.annotation.ScheduledAnnotationBeanPostProcessor.postProcessAfterInitialization(ScheduledAnnotationBeanPostProcessor.java:379) ~[spring-context-5.3.16.jar:5.3.16]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.applyBeanPostProcessorsAfterInitialization(AbstractAutowireCapableBeanFactory.java:455) ~[spring-beans-5.3.16.jar:5.3.16]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.initializeBean(AbstractAutowireCapableBeanFactory.java:1808) ~[spring-beans-5.3.16.jar:5.3.16]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:620) ~[spring-beans-5.3.16.jar:5.3.16]
+	... 18 common frames omitted
+
+2024-03-09 00:26:35.738  INFO 6208 --- [restartedMain] c.w.d.DocumentsWenKuApplication          : Starting DocumentsWenKuApplication using Java 20 on DeskTop-GaFfEy with PID 6208 (D:\Java_Project\Document_WenKu\document_wenku\target\classes started by GaffEy in D:\Java_Project\Document_WenKu\document_wenku)
+2024-03-09 00:26:35.739  INFO 6208 --- [restartedMain] c.w.d.DocumentsWenKuApplication          : No active profile set, falling back to 1 default profile: "default"
+2024-03-09 00:26:35.777  INFO 6208 --- [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2024-03-09 00:26:35.778  INFO 6208 --- [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2024-03-09 00:26:36.215  INFO 6208 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode!
+2024-03-09 00:26:36.216  INFO 6208 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2024-03-09 00:26:36.231  INFO 6208 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 5 ms. Found 0 Redis repository interfaces.
+2024-03-09 00:26:36.818  INFO 6208 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8080 (http)
+2024-03-09 00:26:36.828  INFO 6208 --- [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2024-03-09 00:26:36.828  INFO 6208 --- [restartedMain] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.58]
+2024-03-09 00:26:36.895  INFO 6208 --- [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2024-03-09 00:26:36.895  INFO 6208 --- [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1117 ms
+2024-03-09 00:26:37.285  INFO 6208 --- [restartedMain] org.redisson.Version                     : Redisson 3.17.5
+2024-03-09 00:26:37.478  INFO 6208 --- [redisson-netty-2-9] o.r.c.pool.MasterPubSubConnectionPool    : 1 connections initialized for 1.14.1.82/1.14.1.82:6379
+2024-03-09 00:26:37.623  INFO 6208 --- [redisson-netty-2-19] o.r.c.pool.MasterConnectionPool          : 24 connections initialized for 1.14.1.82/1.14.1.82:6379
+2024-03-09 00:26:38.186  INFO 6208 --- [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
+2024-03-09 00:26:38.207  INFO 6208 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8080 (http) with context path ''
+2024-03-09 00:26:38.217  INFO 6208 --- [restartedMain] c.w.d.DocumentsWenKuApplication          : Started DocumentsWenKuApplication in 2.94 seconds (JVM running for 3.579)
+2024-03-09 00:28:00.014  INFO 6208 --- [scheduling-1] c.wenku.documents_wenku.job.PreCacheJob  : start schedule
+2024-03-09 00:28:00.160  INFO 6208 --- [scheduling-1] c.wenku.documents_wenku.job.PreCacheJob  : 99get lock
+2024-03-09 00:28:00.178  INFO 6208 --- [scheduling-1] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2024-03-09 00:28:00.393  INFO 6208 --- [scheduling-1] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2024-03-09 00:28:00.498  INFO 6208 --- [scheduling-1] c.wenku.documents_wenku.job.PreCacheJob  : 99unlocck
+2024-03-09 00:28:21.000  INFO 13136 --- [main] c.w.d.service.impl.UserServiceImplTest   : Starting UserServiceImplTest using Java 20 on DeskTop-GaFfEy with PID 13136 (started by GaffEy in D:\Java_Project\Document_WenKu\document_wenku)
+2024-03-09 00:28:21.001  INFO 13136 --- [main] c.w.d.service.impl.UserServiceImplTest   : No active profile set, falling back to 1 default profile: "default"
+2024-03-09 00:28:21.610  INFO 13136 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode!
+2024-03-09 00:28:21.612  INFO 13136 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2024-03-09 00:28:21.635  INFO 13136 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 9 ms. Found 0 Redis repository interfaces.
+2024-03-09 00:28:22.647  INFO 13136 --- [main] org.redisson.Version                     : Redisson 3.17.5
+2024-03-09 00:28:22.873  INFO 13136 --- [redisson-netty-2-9] o.r.c.pool.MasterPubSubConnectionPool    : 1 connections initialized for 1.14.1.82/1.14.1.82:6379
+2024-03-09 00:28:23.014  INFO 13136 --- [redisson-netty-2-19] o.r.c.pool.MasterConnectionPool          : 24 connections initialized for 1.14.1.82/1.14.1.82:6379
+2024-03-09 00:28:24.096  INFO 13136 --- [main] c.w.d.service.impl.UserServiceImplTest   : Started UserServiceImplTest in 3.431 seconds (JVM running for 4.388)
+2024-03-09 00:28:24.324  INFO 13136 --- [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2024-03-09 00:28:24.632  INFO 13136 --- [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2024-03-09 00:28:25.123  INFO 13136 --- [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2024-03-09 00:28:25.168  INFO 13136 --- [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+2024-03-09 00:29:07.255  INFO 6208 --- [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2024-03-09 00:29:07.299  INFO 6208 --- [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+2024-03-09 00:29:10.478  INFO 11020 --- [restartedMain] c.w.d.DocumentsWenKuApplication          : Starting DocumentsWenKuApplication using Java 20 on DeskTop-GaFfEy with PID 11020 (D:\Java_Project\Document_WenKu\document_wenku\target\classes started by GaffEy in D:\Java_Project\Document_WenKu\document_wenku)
+2024-03-09 00:29:10.479  INFO 11020 --- [restartedMain] c.w.d.DocumentsWenKuApplication          : No active profile set, falling back to 1 default profile: "default"
+2024-03-09 00:29:10.517  INFO 11020 --- [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2024-03-09 00:29:10.517  INFO 11020 --- [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2024-03-09 00:29:10.971  INFO 11020 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode!
+2024-03-09 00:29:10.973  INFO 11020 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2024-03-09 00:29:10.988  INFO 11020 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 6 ms. Found 0 Redis repository interfaces.
+2024-03-09 00:29:11.459  INFO 11020 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8080 (http)
+2024-03-09 00:29:11.466  INFO 11020 --- [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2024-03-09 00:29:11.466  INFO 11020 --- [restartedMain] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.58]
+2024-03-09 00:29:11.510  INFO 11020 --- [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2024-03-09 00:29:11.511  INFO 11020 --- [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 994 ms
+2024-03-09 00:29:11.921  INFO 11020 --- [restartedMain] org.redisson.Version                     : Redisson 3.17.5
+2024-03-09 00:29:12.099  INFO 11020 --- [redisson-netty-2-9] o.r.c.pool.MasterPubSubConnectionPool    : 1 connections initialized for 1.14.1.82/1.14.1.82:6379
+2024-03-09 00:29:12.222  INFO 11020 --- [redisson-netty-2-19] o.r.c.pool.MasterConnectionPool          : 24 connections initialized for 1.14.1.82/1.14.1.82:6379
+2024-03-09 00:29:12.684  INFO 11020 --- [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
+2024-03-09 00:29:12.705  INFO 11020 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8080 (http) with context path ''
+2024-03-09 00:29:12.714  INFO 11020 --- [restartedMain] c.w.d.DocumentsWenKuApplication          : Started DocumentsWenKuApplication in 2.553 seconds (JVM running for 3.069)
+2024-03-09 00:30:00.002  INFO 11020 --- [scheduling-1] c.wenku.documents_wenku.job.PreCacheJob  : start schedule
+2024-03-09 00:30:00.241  INFO 11020 --- [scheduling-1] c.wenku.documents_wenku.job.PreCacheJob  : 98get lock
+2024-03-09 00:30:00.260  INFO 11020 --- [scheduling-1] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2024-03-09 00:30:00.478  INFO 11020 --- [scheduling-1] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2024-03-09 00:30:00.581  INFO 11020 --- [scheduling-1] c.wenku.documents_wenku.job.PreCacheJob  : 98unlocck
+2024-03-09 00:30:09.909  INFO 5440 --- [main] c.w.d.service.impl.UserServiceImplTest   : Starting UserServiceImplTest using Java 20 on DeskTop-GaFfEy with PID 5440 (started by GaffEy in D:\Java_Project\Document_WenKu\document_wenku)
+2024-03-09 00:30:09.910  INFO 5440 --- [main] c.w.d.service.impl.UserServiceImplTest   : No active profile set, falling back to 1 default profile: "default"
+2024-03-09 00:30:10.407  INFO 5440 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode!
+2024-03-09 00:30:10.411  INFO 5440 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2024-03-09 00:30:10.430  INFO 5440 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 7 ms. Found 0 Redis repository interfaces.
+2024-03-09 00:30:11.338  INFO 5440 --- [main] org.redisson.Version                     : Redisson 3.17.5
+2024-03-09 00:30:11.545  INFO 5440 --- [redisson-netty-2-9] o.r.c.pool.MasterPubSubConnectionPool    : 1 connections initialized for 1.14.1.82/1.14.1.82:6379
+2024-03-09 00:30:11.679  INFO 5440 --- [redisson-netty-2-19] o.r.c.pool.MasterConnectionPool          : 24 connections initialized for 1.14.1.82/1.14.1.82:6379
+2024-03-09 00:30:12.626  INFO 5440 --- [main] c.w.d.service.impl.UserServiceImplTest   : Started UserServiceImplTest in 3.005 seconds (JVM running for 3.85)
+2024-03-09 00:30:12.832  INFO 5440 --- [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2024-03-09 00:30:13.123  INFO 5440 --- [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2024-03-09 00:30:13.546  INFO 5440 --- [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2024-03-09 00:30:13.597  INFO 5440 --- [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+2024-03-09 00:31:09.349  INFO 11020 --- [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2024-03-09 00:31:09.397  INFO 11020 --- [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+2024-03-09 00:31:12.574  INFO 23432 --- [restartedMain] c.w.d.DocumentsWenKuApplication          : Starting DocumentsWenKuApplication using Java 20 on DeskTop-GaFfEy with PID 23432 (D:\Java_Project\Document_WenKu\document_wenku\target\classes started by GaffEy in D:\Java_Project\Document_WenKu\document_wenku)
+2024-03-09 00:31:12.575  INFO 23432 --- [restartedMain] c.w.d.DocumentsWenKuApplication          : No active profile set, falling back to 1 default profile: "default"
+2024-03-09 00:31:12.612  INFO 23432 --- [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2024-03-09 00:31:12.612  INFO 23432 --- [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2024-03-09 00:31:13.000  INFO 23432 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode!
+2024-03-09 00:31:13.002  INFO 23432 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2024-03-09 00:31:13.016  INFO 23432 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 5 ms. Found 0 Redis repository interfaces.
+2024-03-09 00:31:13.438  INFO 23432 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8080 (http)
+2024-03-09 00:31:13.444  INFO 23432 --- [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2024-03-09 00:31:13.445  INFO 23432 --- [restartedMain] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.58]
+2024-03-09 00:31:13.485  INFO 23432 --- [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2024-03-09 00:31:13.485  INFO 23432 --- [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 873 ms
+2024-03-09 00:31:13.856  INFO 23432 --- [restartedMain] org.redisson.Version                     : Redisson 3.17.5
+2024-03-09 00:31:14.039  INFO 23432 --- [redisson-netty-2-9] o.r.c.pool.MasterPubSubConnectionPool    : 1 connections initialized for 1.14.1.82/1.14.1.82:6379
+2024-03-09 00:31:14.159  INFO 23432 --- [redisson-netty-2-19] o.r.c.pool.MasterConnectionPool          : 24 connections initialized for 1.14.1.82/1.14.1.82:6379
+2024-03-09 00:31:14.554  INFO 23432 --- [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
+2024-03-09 00:31:14.572  INFO 23432 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8080 (http) with context path ''
+2024-03-09 00:31:14.580  INFO 23432 --- [restartedMain] c.w.d.DocumentsWenKuApplication          : Started DocumentsWenKuApplication in 2.263 seconds (JVM running for 2.694)
+2024-03-09 00:32:00.002  INFO 23432 --- [scheduling-1] c.wenku.documents_wenku.job.PreCacheJob  : start schedule
+2024-03-09 00:32:00.264  INFO 23432 --- [scheduling-1] c.wenku.documents_wenku.job.PreCacheJob  : 98get lock
+2024-03-09 00:32:00.284  INFO 23432 --- [scheduling-1] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2024-03-09 00:32:00.496  INFO 23432 --- [scheduling-1] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2024-03-09 00:32:00.604  INFO 23432 --- [scheduling-1] c.wenku.documents_wenku.job.PreCacheJob  : 98unlocck
+2024-03-09 00:32:15.877  INFO 23004 --- [main] c.w.d.service.impl.UserServiceImplTest   : Starting UserServiceImplTest using Java 20 on DeskTop-GaFfEy with PID 23004 (started by GaffEy in D:\Java_Project\Document_WenKu\document_wenku)
+2024-03-09 00:32:15.878  INFO 23004 --- [main] c.w.d.service.impl.UserServiceImplTest   : No active profile set, falling back to 1 default profile: "default"
+2024-03-09 00:32:16.395  INFO 23004 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode!
+2024-03-09 00:32:16.397  INFO 23004 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2024-03-09 00:32:16.415  INFO 23004 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 8 ms. Found 0 Redis repository interfaces.
+2024-03-09 00:32:17.264  INFO 23004 --- [main] org.redisson.Version                     : Redisson 3.17.5
+2024-03-09 00:32:17.492  INFO 23004 --- [redisson-netty-2-9] o.r.c.pool.MasterPubSubConnectionPool    : 1 connections initialized for 1.14.1.82/1.14.1.82:6379
+2024-03-09 00:32:17.625  INFO 23004 --- [redisson-netty-2-19] o.r.c.pool.MasterConnectionPool          : 24 connections initialized for 1.14.1.82/1.14.1.82:6379
+2024-03-09 00:32:18.568  INFO 23004 --- [main] c.w.d.service.impl.UserServiceImplTest   : Started UserServiceImplTest in 2.963 seconds (JVM running for 3.822)
+2024-03-09 00:32:18.743  INFO 23004 --- [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2024-03-09 00:32:19.029  INFO 23004 --- [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2024-03-09 00:32:19.443  INFO 23004 --- [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2024-03-09 00:32:19.484  INFO 23004 --- [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+2024-03-09 00:32:24.689  INFO 23432 --- [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2024-03-09 00:32:24.736  INFO 23432 --- [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.

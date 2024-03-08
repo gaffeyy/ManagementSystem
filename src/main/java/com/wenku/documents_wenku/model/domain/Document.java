@@ -68,6 +68,11 @@ public class Document implements Serializable {
     @TableField(value = "likes")
     private Long likes;
 
+    /**
+     * 浏览记录
+     */
+    private Long browser;
+
     @TableField(exist = false)
     private static final long serialVersionUID = 1L;
 }

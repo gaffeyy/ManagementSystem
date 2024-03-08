@@ -77,5 +77,16 @@ public interface DocumentService extends IService<Document> {
 	 */
 	public String documentUpload(MultipartFile uploadDocument);
 
-	// TODO 推荐收藏最高的十个文档
+
+	/**
+	 * 从数据库获取点赞最高的10个文档
+	 * @return List
+	 */
+	public List<Document> recommednDocument();
+
+	/**
+	 * 从缓存获得推荐
+	 * @return List
+	 */
+	public List<Document> redommendFromRedis();
 }

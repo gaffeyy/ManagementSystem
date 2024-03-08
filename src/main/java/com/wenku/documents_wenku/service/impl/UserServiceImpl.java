@@ -3,6 +3,7 @@ package com.wenku.documents_wenku.service.impl;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.wenku.documents_wenku.constant.Constant;
+import com.wenku.documents_wenku.constant.RedisConstant;
 import com.wenku.documents_wenku.model.domain.User;
 import com.wenku.documents_wenku.service.UserService;
 import com.wenku.documents_wenku.mapper.UserMapper;
@@ -138,7 +139,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
 		Cookie cookie = cookieUtils.getCookie(request, Constant.USER_LOGIN_STATE);
 		if(!redisTemplate.hasKey(cookie.getValue())){
 			//未登录
-			return -1;
+			return 0;
 		}
 		if(redisTemplate.delete(cookie.getValue())){
 			//移除Cookie
@@ -183,14 +184,27 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
 	}
 
 	@Override
-	public String setLike(long documentId) {
-		return null;
+	public Long setLike(long documentId, long userId) {
+		String Key = RedisConstant.USER_LIKE_SET_INREDISKEY + Long.toString(documentId);
+		String HashKey = RedisConstant.DOCUMENT_COUNT_REDIS + Long.toString(documentId);
+		Long addResult = redisTemplate.opsForSet().add(Key, userId);
+		if(addResult == 0){
+			//用户已经点过赞,取消点赞
+			redisTemplate.opsForSet().remove(Key,userId);
+			Long likes = redisTemplate.opsForHash().increment(HashKey, RedisConstant.HASH_LIKECOUNT, -1);
+			return likes;
+		}
+		Long likes = redisTemplate.opsForHash().increment(HashKey, RedisConstant.HASH_LIKECOUNT, 1);
+		return likes;
 	}
 
 	@Override
-	public String unSetLike(long documentId) {
-		return null;
+	public Long setBrowser(Long documentId, long userId) {
+		String Key = RedisConstant.DOCUMENT_COUNT_REDIS+documentId;
+		redisTemplate.opsForHash().increment(Key,RedisConstant.HASH_READCOUNT,1);
+		return documentId;
 	}
+
 }
 
 
