@@ -6,10 +6,8 @@ import com.wenku.documents_wenku.model.request.UserLoginBody;
 import com.wenku.documents_wenku.model.request.UserRegisterBody;
 import com.wenku.documents_wenku.service.UserService;
 import com.wenku.documents_wenku.utils.CookieUtils;
-import io.netty.util.internal.StringUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;

@@ -21,4 +21,5 @@
         uploadUserId,uploadTime,isDelete,
         ducomentUrl,tags,likes,browser
     </sql>
+
 </mapper>

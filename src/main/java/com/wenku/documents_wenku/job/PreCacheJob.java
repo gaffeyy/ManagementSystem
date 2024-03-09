@@ -36,7 +36,12 @@ public class PreCacheJob {
 	@Resource
 	private RedisTemplate<String ,Object> redisTemplate;
 
-	@Scheduled(cron = "0 32 0 * * *")
+	/**
+	 * 缓存预热首页每日推荐
+	 *
+	 */
+
+	@Scheduled(cron = "0 0 0 * * *")  // 秒 时 分 * * *
 	public void doCacheRecommendDocument(){
 		System.out.println("start");
 		log.info("start schedule");
