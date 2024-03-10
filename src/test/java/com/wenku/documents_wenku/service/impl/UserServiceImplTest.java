@@ -43,10 +43,11 @@ class UserServiceImplTest {
 	RedissonClient redissonClient;
 	@Test
 	public void testMysql(){
-		User user = new User();
-		user.setUserAccount("123");
-		user.setUserPassword("123");
-		userMapper.insert(user);
+//		User user = new User();
+//		user.setUserAccount("123");
+//		user.setUserPassword("123");
+//		userMapper.insert(user);
+		System.out.println(new Date());
 	}
 	@Test
 	public void testRedis(){
@@ -93,9 +94,9 @@ class UserServiceImplTest {
 
 	@Test
 	void userRegesiter() {
-		String userAccount = "gaffet";
+		String userAccount = "12345";
 		String userPassword = "12345";
-		String checkPassword = "";
+		String checkPassword = "12345";
 		long l = userService.userRegesiter(userAccount, userPassword, checkPassword);
 		System.out.println(l);
 		Assertions.assertNotEquals(l,-1);

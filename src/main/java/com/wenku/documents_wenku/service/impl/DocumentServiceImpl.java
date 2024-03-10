@@ -1,13 +1,17 @@
 package com.wenku.documents_wenku.service.impl;
+import java.util.Date;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.wenku.documents_wenku.common.BusinessErrors;
 import com.wenku.documents_wenku.constant.RedisConstant;
+import com.wenku.documents_wenku.exception.BusinessException;
 import com.wenku.documents_wenku.model.domain.Document;
 import com.wenku.documents_wenku.service.DocumentService;
 import com.wenku.documents_wenku.mapper.DocumentMapper;
 import com.wenku.documents_wenku.utils.FtpUtils;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.redisson.api.RList;
 import org.redisson.api.RedissonClient;
@@ -16,6 +20,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
 * @author gaffey
@@ -23,6 +28,7 @@ import java.util.List;
 * @createDate 2024-03-02 17:42:31
 */
 @Service
+@Slf4j
 public class DocumentServiceImpl extends ServiceImpl<DocumentMapper, Document>
     implements DocumentService {
 
@@ -36,6 +42,7 @@ public class DocumentServiceImpl extends ServiceImpl<DocumentMapper, Document>
 	public String addDocument(String documentName, String category, long uploadUser, String documentUrl, String tags) {
 		if(StringUtils.isAnyBlank(documentName,category,documentUrl,tags)){
 			//请求参数有误
+			log.error("请求参数有误"+ new Date());
 			return null;
 		}
 		Document addDocument = new Document();
@@ -50,7 +57,8 @@ public class DocumentServiceImpl extends ServiceImpl<DocumentMapper, Document>
 			return documentName + ":" +documentUrl;
 		}else {
 			//添加失败
-			return null;
+			log.error("添加文档失败"+new Date());
+			throw new BusinessException(BusinessErrors.SYSTEM_ERROR);
 		}
 	}
 
@@ -84,7 +92,7 @@ public class DocumentServiceImpl extends ServiceImpl<DocumentMapper, Document>
 			return null;
 		}else {
 			//查询成功返回
-			return selectedDocument;
+			return getSafetyDoc(selectedDocument);
 		}
 
 	}
@@ -104,7 +112,6 @@ public class DocumentServiceImpl extends ServiceImpl<DocumentMapper, Document>
 		System.out.println(fileOriginalName);
 		FtpUtils ftpUtil = new FtpUtils();
 
-		//给起一个新的文件名称，防止名称重复
 		String newname=new String();
 
 		if(uploadDocument!=null){
@@ -112,38 +119,44 @@ public class DocumentServiceImpl extends ServiceImpl<DocumentMapper, Document>
 			newname = System.currentTimeMillis()+uploadDocument.getOriginalFilename();
 
 			try {
-				//图片上传，调用ftp工具类 image 上传的文件夹名称，newname 图片名称，inputStream
 				boolean hopson = ftpUtil.uploadFileToFtp("Document", newname, uploadDocument.getInputStream());
 				if(hopson) {  //上传成功
-					// 文件信息入库
-                   /* File file = new File();
-                    file.setName(newname);
-                    file.setSize(size);
-                    file.setUrl(url);
-                    file.setMassifId(massifId);
-                    file.setPhoto(path + newname);
-                    .....   等等业务处理
-                    this.insert(dkPhoto);*/
+					log.info("文件上传服务器成功 ---- "+newname);
 				}
 			} catch (Exception e) {
 				e.printStackTrace();
-				return "error";
+				log.error("文件上传服务器失败 ---- "+e);
+				return null;
 			}
 		}
-//		log.info("文件上传完成==============");
-		return "success";
+		return newname;
 	}
 
 	@Override
 	public List<Document> recommednDocument() {
 		List<Document> documents = documentMapper.selectTopTenDocument();
-		return documents;
+		return documents.stream().map(this::getSafetyDoc).collect(Collectors.toList());
 	}
 
 	@Override
 	public List<Document> redommendFromRedis() {
 		RList<Document> list = redissionClient.getList(RedisConstant.RECOMEND_TOP_DOCUMENT);
-		return list;
+		return 	list.stream().map(this::getSafetyDoc).collect(Collectors.toList());
+	}
+
+	public Document getSafetyDoc(Document document){
+		Document safetyDoc = new Document();
+		safetyDoc.setDocumentId(document.getDocumentId());
+		safetyDoc.setDocumentName(document.getDocumentName());
+		safetyDoc.setCategory(document.getCategory());
+//		safetyDoc.setUploadUserId(0L);
+//		safetyDoc.setUploadTime(new Date());
+//		safetyDoc.setIsDelete(0);
+		safetyDoc.setDucomentUrl(document.getDucomentUrl());
+		safetyDoc.setTags(document.getTags());
+		safetyDoc.setLikes(document.getLikes());
+		safetyDoc.setBrowser(document.getBrowser());
+		return safetyDoc;
 	}
 }
 

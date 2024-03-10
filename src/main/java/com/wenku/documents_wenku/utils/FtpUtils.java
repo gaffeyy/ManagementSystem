@@ -9,6 +9,7 @@ import org.springframework.stereotype.Component;
 
 import java.io.*;
 import java.net.MalformedURLException;
+import java.util.Date;
 
 /**
  * FTP 工具类
@@ -50,10 +51,10 @@ public class FtpUtils {
 
 		try {
 			ftpClient.setDataTimeout(1000 * 120);//设置连接超时时间
-			log.info("connecting...ftp服务器:" + hostname + ":" + hostname);
-			log.info("connecting...ftp服务器:" + port + ":" + port);
-			log.info("connecting...ftp服务器:" + username + ":" + username);
-			log.info("connecting...ftp服务器:" + password + ":" + password);
+			log.info("connecting...ftp服务器 ---- " + hostname + ":" + hostname);
+			log.info("connecting...ftp服务器 ---- " + port + ":" + port);
+			log.info("connecting...ftp服务器 ---- " + username + ":" + username);
+			log.info("connecting...ftp服务器 ---- " + password + ":" + password);
 			ftpClient.connect(hostname, port); // 连接ftp服务器
 			ftpClient.login(username, password); // 登录ftp服务器
 			int replyCode = ftpClient.getReplyCode(); // 是否成功登录服务器
@@ -62,9 +63,9 @@ public class FtpUtils {
 //				LOCAL_CHARSET = "UTF-8";
 			}
 			if (!FTPReply.isPositiveCompletion(replyCode)) {
-				System.out.println("connect failed...ftp服务器:" + hostname + ":" + port);
+				log.error("connect failed...ftp服务器:" + hostname + ":" + port);
 			}
-			System.out.println("connect successfu...ftp服务器:" + hostname + ":" + port);
+			log.info("connect successfu...ftp服务器:" + hostname + ":" + port);
 		} catch (MalformedURLException e) {
 
 		} catch (IOException e) {
@@ -88,16 +89,15 @@ public class FtpUtils {
 		FTPClient ftpClient = getFtpClient();
 		try {
 			if (ftpClient.isConnected()) {
-				log.info("开始上传文件到FTP,文件名称:" + fileName);
-				System.out.println("开始上传文件到FTP,文件名称:" + fileName);
+				log.info("开始上传文件到FTP,文件名称:" + fileName + new Date());
 				ftpClient.setFileType(FTP.BINARY_FILE_TYPE);//设置上传文件类型为二进制，否则将无法打开文件
 				ftpClient.changeToParentDirectory();
 				ftpClient.makeDirectory(servicePath);
 				boolean changed = ftpClient.changeWorkingDirectory(servicePath);
 				if(changed){
-					System.out.println("change");
+
 				}else {
-					System.out.println("not change");
+
 				}
 //				ftpClient.changeToParentDirectory();
 				//设置为被动模式(如上传文件夹成功，不能上传文件，注释这行，否则报错refused:connect  )
@@ -107,19 +107,16 @@ public class FtpUtils {
 				inputStream.close();
 				ftpClient.logout();
 				isSuccess = true;
-				System.out.println(fileName + "文件上传到FTP成功");
-//				logger.info(fileName + "文件上传到FTP成功");
+				log.info(fileName + "文件上传到FTP成功"+ new Date());
 			} else {
-				System.out.println("FTP连接建立失败");
-//				logger.error("FTP连接建立失败");
+				log.error("FTP连接建立失败" + new Date());
 			}
 		} catch (Exception e) {
-			System.out.println(fileName + "文件上传到FTP出现异常");
-//			logger.error(fileName + "文件上传到FTP出现异常");
-//			logger.error(e.getMessage(), e);
+			log.error(fileName + "文件上传到FTP出现异常"+ e);
 		} finally {
 			closeFtpClient(ftpClient);
 			closeStream(inputStream);
+			log.info("关闭FtpClient和inputstream"+new Date());
 		}
 		return isSuccess;
 	}
@@ -129,7 +126,7 @@ public class FtpUtils {
 			try {
 				closeable.close();
 			} catch (IOException e) {
-//				logger.error(e.getMessage(), e);
+				log.error(e.getMessage(),e);
 			}
 		}
 	}
@@ -138,7 +135,7 @@ public class FtpUtils {
 			try {
 				ftpClient.disconnect();
 			} catch (IOException e) {
-//				logger.error(e.getMessage(), e);
+				log.error(e.getMessage(),e);
 			}
 		}
 	}

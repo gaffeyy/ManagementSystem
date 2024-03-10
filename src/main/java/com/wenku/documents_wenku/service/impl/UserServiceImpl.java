@@ -2,12 +2,15 @@ package com.wenku.documents_wenku.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.wenku.documents_wenku.common.BusinessErrors;
 import com.wenku.documents_wenku.constant.Constant;
 import com.wenku.documents_wenku.constant.RedisConstant;
+import com.wenku.documents_wenku.exception.BusinessException;
 import com.wenku.documents_wenku.model.domain.User;
 import com.wenku.documents_wenku.service.UserService;
 import com.wenku.documents_wenku.mapper.UserMapper;
 import com.wenku.documents_wenku.utils.CookieUtils;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
@@ -26,6 +29,7 @@ import java.util.concurrent.TimeUnit;
 * @createDate 2024-03-02 17:45:49
 */
 @Service
+@Slf4j
 public class UserServiceImpl extends ServiceImpl<UserMapper, User>
     implements UserService{
 
@@ -40,21 +44,21 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
 	private RedisTemplate<String,Object> redisTemplate;
 
 	@Override
-	public long userRegesiter(String userAccount, String userPassword, String checkPassword) {
+	public Long userRegesiter(String userAccount, String userPassword, String checkPassword) {
 		if(userAccount == null || userPassword == null || checkPassword == null){
 			//输入参数有误
-			return -1;
+			throw new BusinessException(BusinessErrors.PARAMS_ERROR);
 		}
 		if(!userPassword.equals(checkPassword)){
 			//输入参数有误
-			return -1;
+			throw new BusinessException(BusinessErrors.PARAMS_ERROR);
 		}
 		QueryWrapper<User> queryWrapper = new QueryWrapper<>();
 		queryWrapper.eq("userAccount",userAccount);
 		User selectUser = userMapper.selectOne(queryWrapper);
 		if(selectUser != null){
 			//账号已存在，不允许重复
-			return -1;
+			throw new BusinessException(BusinessErrors.SYSTEM_ERROR,"账号已存在");
 		}
 		User newUser = new User();
 		newUser.setUserAccount(userAccount);
@@ -67,7 +71,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
 			return newUser.getId();
 		}else {
 			//添加失败
-			return -1;
+			throw new BusinessException(BusinessErrors.SYSTEM_ERROR);
 		}
 	}
 
@@ -88,11 +92,10 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
 			if(userAccount == null && userPassword == null){
 				queryWrapper.eq("userAccount",redisTemplate.opsForValue().get(cookie.getValue()));
 				User loginedUser = userMapper.selectOne(queryWrapper);
-				System.out.println("已登录");
-				return loginedUser;
+				return getSafetyUser(loginedUser);
 			}else if(StringUtils.isAnyBlank(userAccount,userPassword)){
 				//请求参数有误
-				return null;
+				throw new BusinessException(BusinessErrors.PARAMS_ERROR);
 			}else {
 				//密码加密
 				String encrptPassword = DigestUtils.md5DigestAsHex((SALT + userPassword).getBytes());
@@ -112,7 +115,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
 				redisTemplate.opsForValue().set(uuid,loginedUser.getUserAccount());
 				redisTemplate.expire(uuid,30, TimeUnit.MINUTES);
 				//登录成功
-				return loginedUser;
+				return getSafetyUser(loginedUser);
 			}
 
 		}else {
@@ -123,6 +126,9 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
 			queryWrapper.eq("userAccount",userAccount);
 			queryWrapper.eq("userPassword",encrptPassword);
 			User loginUser = userMapper.selectOne(queryWrapper);
+			if(loginUser == null){
+				throw new BusinessException(BusinessErrors.NULL_ERROR);
+			}
 			String uuid = UUID.randomUUID().toString();
 			//添加cookie
 			cookieUtils.addCookie(request,response, Constant.USER_LOGIN_STATE, uuid, 30 * 60);
@@ -130,7 +136,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
 			redisTemplate.expire(uuid,30, TimeUnit.MINUTES);
 
 			//登录成功
-			return loginUser;
+			return getSafetyUser(loginUser);
 		}
 	}
 
@@ -165,7 +171,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
 			//不存在该用户
 			return null;
 		}
-		return currentUser;
+		return getSafetyUser(currentUser);
 	}
 
 	@Override
@@ -203,6 +209,22 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
 		String Key = RedisConstant.DOCUMENT_COUNT_REDIS+documentId;
 		redisTemplate.opsForHash().increment(Key,RedisConstant.HASH_READCOUNT,1);
 		return documentId;
+	}
+
+	public User getSafetyUser(User user){
+		User safetyRetuenUser = new User();
+		safetyRetuenUser.setId(user.getId());
+		safetyRetuenUser.setUserName(user.getUserName());
+		safetyRetuenUser.setUserAccount(user.getUserAccount());
+		safetyRetuenUser.setGender(user.getGender());
+		safetyRetuenUser.setUserPassword(""); //不返回
+		safetyRetuenUser.setEmail(user.getEmail());
+		safetyRetuenUser.setCreateTime(null); //不返回
+//		safetyRetuenUser.setIsDelete(0); //不返回
+//		safetyRetuenUser.setUserRole(0);
+		safetyRetuenUser.setUserTags(user.getUserTags());
+		return safetyRetuenUser;
+
 	}
 
 }

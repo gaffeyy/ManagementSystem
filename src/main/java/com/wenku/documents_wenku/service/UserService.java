@@ -14,7 +14,6 @@ import javax.servlet.http.HttpServletResponse;
 public interface UserService extends IService<User> {
 
 	/**
-	 *
 	 * 用户注册
 	 *
 	 * @param userAccount
@@ -22,7 +21,7 @@ public interface UserService extends IService<User> {
 	 * @param checkPassword
 	 * @return 用户id(主键)
 	 */
-	public long userRegesiter(String userAccount,String userPassword,String checkPassword);
+	public Long userRegesiter(String userAccount,String userPassword,String checkPassword);
 
 	/**
 	 * 用户登录

@@ -13,6 +13,7 @@ import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -43,9 +44,9 @@ public class PreCacheJob {
 
 	@Scheduled(cron = "0 0 0 * * *")  // 秒 时 分 * * *
 	public void doCacheRecommendDocument(){
-		System.out.println("start");
-		log.info("start schedule");
+		log.info("开始每日推荐缓存预热任务 ---- "+new Date());
 		RLock rLock = redissonClient.getLock("wenku:doCacheRecommendDocument:lock");
+		log.info(Thread.currentThread().getId() + " ---- 获得缓存任务锁");
 		try{
 			List<Document> recomendList = new ArrayList<>();
 			int size = 0;
@@ -54,7 +55,7 @@ public class PreCacheJob {
 				for (int i = 0;i < originSize;i++){
 					redisTemplate.opsForList().leftPop(RedisConstant.RECOMEND_TOP_DOCUMENT);
 				}
-				log.info(Thread.currentThread().getId()+"get lock");
+				log.info(Thread.currentThread().getId()+" ---- 执行缓存任务");
 				recomendList = documentService.recommednDocument();
 				size = recomendList.size();
 			}
@@ -64,13 +65,15 @@ public class PreCacheJob {
 				}
 			}catch(Exception e){
 			    log.error("Redis set key Error",e);
+				log.info("缓存任务结束 ---- "+ new Date());
 			}
 		}catch(Exception e){
 		    log.error("doCacheRecommendDocument Error",e);
+			log.info("缓存任务结束 ---- "+ new Date());
 		}finally {
 			if (rLock.isHeldByCurrentThread()){
 				rLock.unlock();
-				log.info(Thread.currentThread().getId()+"unlocck");
+				log.info(Thread.currentThread().getId()+" ---- 释放缓存任务锁" + new Date());
 			}
 		}
 	}
