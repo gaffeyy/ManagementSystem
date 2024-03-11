@@ -117,4 +117,10 @@ class DocumentServiceImplTest {
 			}
 		}
 	}
+
+	@Test
+	void recommednDocument() {
+		List<Document> documents = documentService.recommednDocument();
+		System.out.println(documents);
+	}
 }

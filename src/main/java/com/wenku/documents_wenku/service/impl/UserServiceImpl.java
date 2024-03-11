@@ -6,7 +6,9 @@ import com.wenku.documents_wenku.common.BusinessErrors;
 import com.wenku.documents_wenku.constant.Constant;
 import com.wenku.documents_wenku.constant.RedisConstant;
 import com.wenku.documents_wenku.exception.BusinessException;
+import com.wenku.documents_wenku.mapper.UsercollectMapper;
 import com.wenku.documents_wenku.model.domain.User;
+import com.wenku.documents_wenku.model.domain.Usercollect;
 import com.wenku.documents_wenku.service.UserService;
 import com.wenku.documents_wenku.mapper.UserMapper;
 import com.wenku.documents_wenku.utils.CookieUtils;
@@ -36,6 +38,9 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
 	private static final String SALT = "gaffeyUser";  // 盐值,混淆密码
 	@Resource
 	private UserMapper userMapper;
+
+	@Resource
+	private UsercollectMapper usercollectMapper;
 
 	@Resource
 	private CookieUtils cookieUtils;
@@ -103,6 +108,9 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
 				queryWrapper.eq("userAccount",userAccount);
 				queryWrapper.eq("userPassword",encrptPassword);
 				User loginedUser = userMapper.selectOne(queryWrapper);
+				if(loginedUser == null){
+					throw new BusinessException(BusinessErrors.NULL_ERROR,"账号或密码错误");
+				}
 				String uuid = UUID.randomUUID().toString();
 
 				//当前登录账户与所带Cookie登录账户信息不一致，移除其redis登录态
@@ -127,7 +135,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
 			queryWrapper.eq("userPassword",encrptPassword);
 			User loginUser = userMapper.selectOne(queryWrapper);
 			if(loginUser == null){
-				throw new BusinessException(BusinessErrors.NULL_ERROR);
+				throw new BusinessException(BusinessErrors.NULL_ERROR,"账号或密码错误");
 			}
 			String uuid = UUID.randomUUID().toString();
 			//添加cookie
@@ -208,6 +216,19 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
 	public Long setBrowser(Long documentId, long userId) {
 		String Key = RedisConstant.DOCUMENT_COUNT_REDIS+documentId;
 		redisTemplate.opsForHash().increment(Key,RedisConstant.HASH_READCOUNT,1);
+		return documentId;
+	}
+
+	@Override
+	public Long collectDoc(Long documentId, Long userId) {
+		if(documentId == null || userId == null){
+			//请求参数错误
+			return null;
+		}
+		Usercollect usercollect = new Usercollect();
+		usercollect.setUserId(userId);
+		usercollect.setDocumentId(documentId);
+		usercollectMapper.insert(usercollect);
 		return documentId;
 	}
 

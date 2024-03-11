@@ -89,4 +89,11 @@ public interface DocumentService extends IService<Document> {
 	 * @return List
 	 */
 	public List<Document> redommendFromRedis();
+
+	/**
+	 * 更新点赞和浏览量
+	 *
+	 * @return boolean
+	 */
+	public boolean updateLandB(Long likes,Long browser,Long documentId);
 }

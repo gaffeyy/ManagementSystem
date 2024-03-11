@@ -20,7 +20,7 @@ spring:
         max-wait: -1ms
         min-idle: 0
     timeout: 3000
-    database: 0
+    database: 1
 
 
 # Mybatis

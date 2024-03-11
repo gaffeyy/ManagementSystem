@@ -144,6 +144,15 @@ public class DocumentServiceImpl extends ServiceImpl<DocumentMapper, Document>
 		return 	list.stream().map(this::getSafetyDoc).collect(Collectors.toList());
 	}
 
+	@Override
+	public boolean updateLandB(Long likes, Long browser, Long documentId) {
+		boolean updateResult = documentMapper.updateLikesAndBrowser(likes, browser, documentId);
+		if(!updateResult){
+			log.error("更新点赞和浏览量失败 ---- "+new Date());
+		}
+		return updateResult;
+	}
+
 	public Document getSafetyDoc(Document document){
 		Document safetyDoc = new Document();
 		safetyDoc.setDocumentId(document.getDocumentId());

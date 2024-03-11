@@ -1,4 +1,5 @@
 package com.wenku.documents_wenku.service.impl;
+import java.util.ArrayList;
 import java.util.Date;
 
 import com.wenku.documents_wenku.constant.RedisConstant;
@@ -120,5 +121,56 @@ class UserServiceImplTest {
 
 	@Test
 	void unSetLike() {
+	}
+
+	@Test
+	void persistLikeandReadCount(){
+		Set keys = redisTemplate.keys(RedisConstant.DOCUMENT_COUNT_REDIS + "*");
+		List<String > list = new ArrayList<>(keys);
+		System.out.println(list);
+		List<Long> documentId = new ArrayList<>();
+		for(String str : list){
+			documentId.add(Long.valueOf(str.substring(RedisConstant.DOCUMENT_COUNT_REDIS.length(),str.length())));
+		}
+		System.out.println(documentId);
+		for (Long id : documentId){
+			Document document = documentService.searchDocumentById(id);
+			if(document != null){
+				System.out.println(document);
+				long likes = document.getLikes();
+				long browser = document.getBrowser();
+				System.out.println("Before   浏览："+browser +"点赞"+ likes);
+				Object readcount = redisTemplate.opsForHash().get(RedisConstant.DOCUMENT_COUNT_REDIS + id, "readcount");
+				Object likecount = redisTemplate.opsForHash().get(RedisConstant.DOCUMENT_COUNT_REDIS + id, "likecount");
+				if(readcount != null){
+					browser += (Integer) readcount;
+				}
+				if(likecount != null){
+					likes += (Integer)(likecount);
+//					redisTemplate.opsForHash().put(RedisConstant.DOCUMENT_COUNT_REDIS + id, "likecount",null);
+				}
+				boolean update = documentService.updateLandB(likes, browser, id);
+				if(update && redisTemplate.hasKey(RedisConstant.DOCUMENT_COUNT_REDIS + id)){
+					//更新成功
+					redisTemplate.delete(RedisConstant.DOCUMENT_COUNT_REDIS + id);
+				}else {
+					//更新失败
+					System.out.println("Error");
+				}
+				System.out.println("After   浏览："+browser +"点赞"+ likes);
+//			System.out.println(document);
+			}
+
+		}
+
+	}
+	@Test
+	public void persisitUserLike(){
+		Long size = redisTemplate.opsForSet().size(RedisConstant.USER_LIKE_SET_INREDISKEY);
+		System.out.println(size);
+		Set members = redisTemplate.opsForSet().members(RedisConstant.USER_LIKE_SET_INREDISKEY);
+
+		List<String> list = new ArrayList<>(members);
+		System.out.println(list);
 	}
 }

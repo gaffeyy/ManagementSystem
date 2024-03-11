@@ -84,4 +84,12 @@ public interface UserService extends IService<User> {
 	 * @return 文档ID
 	 */
 	public Long setBrowser(Long documentId, long userId);
+
+	/**
+	 * 用户收藏文档
+	 * @param documentId
+	 * @param userId
+	 * @return 文档Id
+	 */
+	public Long collectDoc(Long documentId, Long userId);
 }

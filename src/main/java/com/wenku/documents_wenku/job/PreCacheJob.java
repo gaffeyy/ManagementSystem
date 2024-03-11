@@ -44,9 +44,9 @@ public class PreCacheJob {
 
 	@Scheduled(cron = "0 0 0 * * *")  // 秒 时 分 * * *
 	public void doCacheRecommendDocument(){
-		log.info("开始每日推荐缓存预热任务 ---- "+new Date());
 		RLock rLock = redissonClient.getLock("wenku:doCacheRecommendDocument:lock");
 		log.info(Thread.currentThread().getId() + " ---- 获得缓存任务锁");
+		log.info("开始每日推荐缓存预热任务 ---- "+new Date());
 		try{
 			List<Document> recomendList = new ArrayList<>();
 			int size = 0;
@@ -69,7 +69,7 @@ public class PreCacheJob {
 			}
 		}catch(Exception e){
 		    log.error("doCacheRecommendDocument Error",e);
-			log.info("缓存任务结束 ---- "+ new Date());
+			log.info("缓存任务执行结束 ---- "+ new Date());
 		}finally {
 			if (rLock.isHeldByCurrentThread()){
 				rLock.unlock();

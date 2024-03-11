@@ -5,7 +5,9 @@ import com.wenku.documents_wenku.common.BusinessErrors;
 import com.wenku.documents_wenku.common.ResultUtils;
 import com.wenku.documents_wenku.constant.Constant;
 import com.wenku.documents_wenku.exception.BusinessException;
+import com.wenku.documents_wenku.mapper.UsercollectMapper;
 import com.wenku.documents_wenku.model.domain.User;
+import com.wenku.documents_wenku.model.request.UserCollectBody;
 import com.wenku.documents_wenku.model.request.UserLoginBody;
 import com.wenku.documents_wenku.model.request.UserRegisterBody;
 import com.wenku.documents_wenku.service.UserService;
@@ -121,8 +123,8 @@ public class UserController {
 	 * @param documentId
 	 * @return 文档的点赞数
 	 */
-	@GetMapping("/setLike")
-	public BaseResponse<Long> userSetLike(HttpServletRequest request,Long documentId){
+	@PostMapping("/setLike")
+	public BaseResponse<Long> userSetLike(HttpServletRequest request,@RequestParam("documentId") Long documentId){
 		User currentUser = userService.getCurrentUser(request);
 		if(currentUser == null){
 			//未登录
@@ -139,8 +141,8 @@ public class UserController {
 	 * @param documentId
 	 * @return
 	 */
-	@GetMapping("/setBrowser")
-	public BaseResponse<Long> userBrowser(HttpServletRequest request,Long documentId){
+	@PostMapping("/setBrowser")
+	public BaseResponse<Long> userBrowser(HttpServletRequest request,@RequestParam("documentId") Long documentId){
 		User currentUser = userService.getCurrentUser(request);
 		if(currentUser == null){
 			//未登录
@@ -148,5 +150,30 @@ public class UserController {
 		}
 		Long documentid = userService.setBrowser(documentId, currentUser.getId());
 		return ResultUtils.success(documentid,"浏览记录加一");
+	}
+
+	/**
+	 * 用户收藏文档接口
+	 *
+	 * @param request
+	 * @param userCollectBody
+	 * @return 文档Id
+	 */
+	@PostMapping("/collect")
+	public BaseResponse<Long> userCollect(HttpServletRequest request, @RequestBody UserCollectBody userCollectBody){
+		if(userCollectBody == null){
+			//请求参数错误
+			return ResultUtils.error(BusinessErrors.PARAMS_ERROR);
+		}
+		User currentUser = userService.getCurrentUser(request);
+		if(currentUser == null){
+			//未登录
+			return ResultUtils.error(BusinessErrors.NOT_LOGIN);
+		}
+		Long l = userService.collectDoc(userCollectBody.getUserId(), userCollectBody.getDocumentId());
+		if(l == null){
+			throw new BusinessException(BusinessErrors.SYSTEM_ERROR);
+		}
+		return ResultUtils.success(l,"收藏成功");
 	}
 }
