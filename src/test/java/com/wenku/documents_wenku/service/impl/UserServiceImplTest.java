@@ -1,6 +1,8 @@
 package com.wenku.documents_wenku.service.impl;
-import java.util.ArrayList;
-import java.util.Date;
+import org.springframework.data.redis.connection.RedisConnectionFactory;
+import org.springframework.data.redis.core.script.ScriptExecutor;
+import org.springframework.data.redis.serializer.RedisSerializer;
+import java.util.*;
 
 import com.wenku.documents_wenku.constant.RedisConstant;
 import com.wenku.documents_wenku.model.domain.Document;
@@ -14,13 +16,16 @@ import org.apache.tomcat.jni.File;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.redisson.api.RList;
+import org.redisson.api.RMap;
 import org.redisson.api.RedissonClient;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.StringRedisTemplate;
+import org.springframework.data.redis.core.script.DefaultRedisScript;
+import org.springframework.data.redis.core.script.RedisScript;
+import org.springframework.data.redis.serializer.StringRedisSerializer;
 
 import javax.annotation.Resource;
-import java.util.List;
-import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
 @SpringBootTest
@@ -31,6 +36,9 @@ class UserServiceImplTest {
 
 	@Resource
 	RedisTemplate redisTemplate;
+
+	@Resource
+	StringRedisTemplate stringRedisTemplate;
 
 	@Resource
 	DocumentService documentService;
@@ -121,6 +129,31 @@ class UserServiceImplTest {
 
 	@Test
 	void unSetLike() {
+		String id = "2";
+		String script = "local readcount = redis.call('hget','" + RedisConstant.DOCUMENT_COUNT_REDIS + id+ "','readcount') \n"+
+						"local likecount=redis.call('get','" + RedisConstant.DOCUMENT_COUNT_REDIS + id+ "','likecount')\n"+
+						"redis.call('del','" + RedisConstant.DOCUMENT_COUNT_REDIS + id+ " ')\n"+
+						"return readcount,likecount";
+		String scriptnew = "local readcount = redis.call('hget',KEYS[1],ARGV[1])\n"+
+				"local likecount = redis.call('hget',KEYS[1],ARGV[2])\n" +
+//				"redis.call('del',KEYS[1])\n"+
+				"return likecount .. ':' .. readcount";
+		String sc =
+				"redis.call('set',KEYS[1],111111)" +
+				"local st = KEYS[1]" +
+				"local ans = redis.call('get',KEYS[1])\nreturn st";
+		DefaultRedisScript<Object> redisScript = new DefaultRedisScript<>(scriptnew,Object.class);
+		String KEYS = RedisConstant.DOCUMENT_COUNT_REDIS + id;
+//		Object execute = redisTemplate1.execute(redisScript, Collections.singletonList(KEYS), "readcount", "likecount");
+//		System.out.println(execute);
+		Object execute1 = stringRedisTemplate.execute(redisScript, Collections.singletonList(KEYS), "readcount", "likecount");
+//		stringRedisTemplate.execute(redisScript,Collections.singletonList(KEYS),"readcount","likecount");
+		System.out.println(execute1);
+		String str =(String) execute1;
+		String[] arr = str.split(":");
+		System.out.println(Arrays.toString(arr));
+//		String s = stringRedisTemplate.opsForValue().get("llllll");
+//		System.out.println(s);
 	}
 
 	@Test

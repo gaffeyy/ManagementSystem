@@ -8,14 +8,13 @@ import org.redisson.api.RList;
 import org.redisson.api.RLock;
 import org.redisson.api.RedissonClient;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.StringRedisTemplate;
+import org.springframework.data.redis.core.script.DefaultRedisScript;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 /**
  * 定时更新用户点赞和浏览量
@@ -37,7 +36,20 @@ public class UpdateLikeAndReadJob {
 	@Resource
 	private DocumentService documentService;
 
+	@Resource
+	private StringRedisTemplate stringRedisTemplate;
+
+	/**
+	 * 	Lua脚本，用于更新Redis数据
+	 */
+	private final String scriptnew = "local readcount = redis.call('hget',KEYS[1],ARGV[1])\n"+
+			"local likecount = redis.call('hget',KEYS[1],ARGV[2])\n" +
+			"redis.call('del',KEYS[1])\n"+
+			"return likecount .. ':' .. readcount";
+
+
 	@Scheduled(cron = "0 0 * * * *")  // 每小时执行一次
+
 
 	public void updateLikeAndReadCount(){
 		RLock lock = redissonClient.getLock("wenku:updateLikeAndReadCount:lock");
@@ -55,28 +67,40 @@ public class UpdateLikeAndReadJob {
 			for (Long id : documentId){
 				Document document = documentService.searchDocumentById(id);
 				if(document != null){
-					System.out.println(document);
+//					System.out.println(document);
 					long likes = document.getLikes();
 					long browser = document.getBrowser();
-					System.out.println("Before   浏览："+browser +"点赞"+ likes);
-					Object readcount = redisTemplate.opsForHash().get(RedisConstant.DOCUMENT_COUNT_REDIS + id, "readcount");
-					Object likecount = redisTemplate.opsForHash().get(RedisConstant.DOCUMENT_COUNT_REDIS + id, "likecount");
-					if(readcount != null){
-						browser += (Integer) readcount;
-					}
-					if(likecount != null){
-						likes += (Integer)(likecount);
-					}
+
+					DefaultRedisScript<Object> redisScript = new DefaultRedisScript<>(scriptnew,Object.class);
+					String KEYS = RedisConstant.DOCUMENT_COUNT_REDIS + id;
+					Object execute1 = stringRedisTemplate.execute(redisScript, Collections.singletonList(KEYS), "readcount", "likecount");
+					String str =(String) execute1;
+					String[] arr = str.split(":");
+					int likecount = Integer.valueOf(arr[0]);
+					int readcount = Integer.valueOf(arr[1]);
+//					Object readcount = redisTemplate.opsForHash().get(RedisConstant.DOCUMENT_COUNT_REDIS + id, "readcount");
+//					Object likecount = redisTemplate.opsForHash().get(RedisConstant.DOCUMENT_COUNT_REDIS + id, "likecount");
+//					if(readcount != null){
+//						browser += (Integer) readcount;
+//					}
+//					if(likecount != null){
+//						likes += (Integer)(likecount);
+//					}
+					browser += readcount;
+					likes += likecount;
 					boolean update = false;
 					try{
 						update = documentService.updateLandB(likes, browser, id);
 					}catch(Exception e){
 					    log.error("updateLikeAndReadCount时更新数据库失败" + e);
 					}
-					if(update && redisTemplate.hasKey(RedisConstant.DOCUMENT_COUNT_REDIS + id)){
-						//更新成功
-						redisTemplate.delete(RedisConstant.DOCUMENT_COUNT_REDIS + id);
+					if(update){
+						log.info("updateLikeAndReadCount时更新数据库成功" + new Date());
 					}
+//					if(update && redisTemplate.hasKey(RedisConstant.DOCUMENT_COUNT_REDIS + id)){
+//						//更新成功
+//						redisTemplate.delete(RedisConstant.DOCUMENT_COUNT_REDIS + id);
+//					}
 				}
 			}
 		}catch(Exception e){
