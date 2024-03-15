@@ -185,17 +185,30 @@ public class DocumentController {
 		Page<Document> documentPage = documentService.searchDocumentByTags(searchTags, pageNum, pageSize);
 		return ResultUtils.success(documentPage,"查询成功");
 	}
+
+	/**
+	 * 文档推荐接口
+	 *
+	 * @param request
+	 * @return 推荐文档
+	 */
 	@GetMapping("/recommend")
 	public BaseResponse<List<Document>> recommendDocuemnts(HttpServletRequest request){
 //		List<Document> documents = documentService.recommednDocument();
 		List<Document> documents1 = documentService.redommendFromRedis();
 		return ResultUtils.success(documents1,"查询成功");
 	}
-	@GetMapping("/recomendtest")
-	public BaseResponse<List<Document>> recommendTest(HttpServletRequest request){
-				List<Document> documents = documentService.recommednDocument();
-//		List<Document> documents1 = documentService.redommendFromRedis();
-		return ResultUtils.success(documents,"查询成功");
-	}
+
+//	/**
+//	 * 测试接口
+//	 * @param request
+//	 * @return
+//	 */
+//	@GetMapping("/recomendtest")
+//	public BaseResponse<List<Document>> recommendTest(HttpServletRequest request){
+//				List<Document> documents = documentService.recommednDocument();
+////		List<Document> documents1 = documentService.redommendFromRedis();
+//		return ResultUtils.success(documents,"查询成功");
+//	}
 
 }
