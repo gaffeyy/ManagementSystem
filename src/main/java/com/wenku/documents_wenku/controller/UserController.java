@@ -1,5 +1,6 @@
 package com.wenku.documents_wenku.controller;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.wenku.documents_wenku.common.BaseResponse;
 import com.wenku.documents_wenku.common.BusinessErrors;
 import com.wenku.documents_wenku.common.ResultUtils;
@@ -7,9 +8,11 @@ import com.wenku.documents_wenku.constant.Constant;
 import com.wenku.documents_wenku.exception.BusinessException;
 import com.wenku.documents_wenku.mapper.UsercollectMapper;
 import com.wenku.documents_wenku.model.domain.User;
+import com.wenku.documents_wenku.model.domain.Usercollect;
 import com.wenku.documents_wenku.model.request.UserCollectBody;
 import com.wenku.documents_wenku.model.request.UserLoginBody;
 import com.wenku.documents_wenku.model.request.UserRegisterBody;
+import com.wenku.documents_wenku.model.response.ReturnCollect;
 import com.wenku.documents_wenku.service.UserService;
 import com.wenku.documents_wenku.utils.CookieUtils;
 import lombok.extern.slf4j.Slf4j;
@@ -175,5 +178,20 @@ public class UserController {
 			throw new BusinessException(BusinessErrors.SYSTEM_ERROR);
 		}
 		return ResultUtils.success(l,"收藏成功");
+	}
+
+	@PostMapping("/getCollect")
+	public BaseResponse<Page<Usercollect>> getCollect(HttpServletRequest request,@RequestParam("pageSize") Long pageSize,@RequestParam("pageNum") Long pageNum){
+		if(pageNum==null || pageSize==null){
+			throw new BusinessException(BusinessErrors.PARAMS_ERROR);
+		}
+		User currentUser = userService.getCurrentUser(request);
+		if(currentUser == null){
+			//未登录
+			return ResultUtils.error(BusinessErrors.NOT_LOGIN,"用户未登录");
+		}
+		Page<Usercollect> usercollectPage = userService.getCollect(currentUser.getId(), pageNum, pageSize);
+		return ResultUtils.success(usercollectPage,"查询成功");
+//		return null;
 	}
 }

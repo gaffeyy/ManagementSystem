@@ -2,6 +2,12 @@ spring:
 
   application:
     name:DocumentsWenKu
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
+
+
+
   # Datasource
   datasource:
     url: jdbc:mysql://43.136.173.33:3306/wenku_user
@@ -42,3 +48,12 @@ ftp:
 logging:
   file:
     name: Wenku_log.log
+
+
+server:
+  port: 8080
+  servlet:
+    context-path: /api
+    session:
+      cookie:
+        domain:

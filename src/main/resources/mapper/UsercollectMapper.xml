@@ -8,9 +8,14 @@
             <id property="id" column="id" jdbcType="BIGINT"/>
             <result property="userId" column="userId" jdbcType="BIGINT"/>
             <result property="documentId" column="documentId" jdbcType="BIGINT"/>
+            <result property="documentUrl" column="documentUrl" jdbcType="VARCHAR"/>
+            <result property="documentName" column="documentName" jdbcType="VARCHAR"/>
+
+
     </resultMap>
 
     <sql id="Base_Column_List">
-        id,userId,documentId
+        id,userId,documentId,documentUrl,
+        documentName
     </sql>
 </mapper>

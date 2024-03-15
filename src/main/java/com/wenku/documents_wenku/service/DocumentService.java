@@ -85,7 +85,7 @@ public interface DocumentService extends IService<Document> {
 	public List<Document> recommednDocument();
 
 	/**
-	 * 从缓存获得推荐
+	 * 从Redis缓存获得推荐
 	 * @return List
 	 */
 	public List<Document> redommendFromRedis();

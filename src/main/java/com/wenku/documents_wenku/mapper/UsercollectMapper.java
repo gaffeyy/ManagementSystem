@@ -2,6 +2,10 @@ package com.wenku.documents_wenku.mapper;
 
 import com.wenku.documents_wenku.model.domain.Usercollect;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.Select;
+
+import java.util.List;
 
 /**
 * @author gaffey
@@ -10,7 +14,9 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 * @Entity generator.domain.Usercollect
 */
 public interface UsercollectMapper extends BaseMapper<Usercollect> {
-
+//	@Select("select userId,documentUrl from userCollect where")
+	@Select("select documentName,documentUrl from userCollect where userId = #{userId}")
+	public List<Usercollect> searchCollect(@Param("userId") Long userId);
 }
 
 

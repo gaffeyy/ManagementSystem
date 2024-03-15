@@ -15,7 +15,9 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
+import javax.print.Doc;
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 /**
  * 文档接口
@@ -182,6 +184,18 @@ public class DocumentController {
 		String searchTags = tags;
 		Page<Document> documentPage = documentService.searchDocumentByTags(searchTags, pageNum, pageSize);
 		return ResultUtils.success(documentPage,"查询成功");
+	}
+	@GetMapping("/recommend")
+	public BaseResponse<List<Document>> recommendDocuemnts(HttpServletRequest request){
+//		List<Document> documents = documentService.recommednDocument();
+		List<Document> documents1 = documentService.redommendFromRedis();
+		return ResultUtils.success(documents1,"查询成功");
+	}
+	@GetMapping("/recomendtest")
+	public BaseResponse<List<Document>> recommendTest(HttpServletRequest request){
+				List<Document> documents = documentService.recommednDocument();
+//		List<Document> documents1 = documentService.redommendFromRedis();
+		return ResultUtils.success(documents,"查询成功");
 	}
 
 }

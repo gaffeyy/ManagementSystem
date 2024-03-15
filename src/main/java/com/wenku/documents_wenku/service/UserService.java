@@ -1,7 +1,10 @@
 package com.wenku.documents_wenku.service;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.wenku.documents_wenku.model.domain.User;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.wenku.documents_wenku.model.domain.Usercollect;
+import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -11,6 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 * @description 针对表【user(用户)】的数据库操作Service
 * @createDate 2024-03-02 17:45:49
 */
+@Service
 public interface UserService extends IService<User> {
 
 	/**
@@ -92,4 +96,11 @@ public interface UserService extends IService<User> {
 	 * @return 文档Id
 	 */
 	public Long collectDoc(Long documentId, Long userId);
+
+	/**
+	 * 获取用户收藏
+	 *
+	 * @return List
+	 */
+	public Page<Usercollect> getCollect(Long userId, long pageNum, long pageSize);
 }

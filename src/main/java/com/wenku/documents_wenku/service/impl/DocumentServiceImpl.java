@@ -1,4 +1,5 @@
 package com.wenku.documents_wenku.service.impl;
+import java.util.ArrayList;
 import java.util.Date;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
@@ -15,6 +16,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.redisson.api.RList;
 import org.redisson.api.RedissonClient;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -37,6 +39,9 @@ public class DocumentServiceImpl extends ServiceImpl<DocumentMapper, Document>
 
 	@Resource
 	private RedissonClient redissionClient;
+
+	@Resource
+	private RedisTemplate<String,Object> redisTemplate;
 
 	@Override
 	public String addDocument(String documentName, String category, long uploadUser, String documentUrl, String tags) {
@@ -140,7 +145,12 @@ public class DocumentServiceImpl extends ServiceImpl<DocumentMapper, Document>
 
 	@Override
 	public List<Document> redommendFromRedis() {
-		RList<Document> list = redissionClient.getList(RedisConstant.RECOMEND_TOP_DOCUMENT);
+//		RList<Document> list = redissionClient.getList(RedisConstant.RECOMEND_TOP_DOCUMENT);
+		List<Object> objectList = redisTemplate.opsForList().range(RedisConstant.RECOMEND_TOP_DOCUMENT, 0, 10);
+		List<Document> list = new ArrayList<>();
+		for(Object obj : objectList){
+			list.add((Document) obj);
+		}
 		return 	list.stream().map(this::getSafetyDoc).collect(Collectors.toList());
 	}
 

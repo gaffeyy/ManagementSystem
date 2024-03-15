@@ -31,6 +31,18 @@ public class Usercollect implements Serializable {
      */
     @TableField(value = "documentId")
     private Long documentId;
+    /**
+     * 被点赞文档id
+     */
+    @TableField(value = "documentUrl")
+    private String documentUrl;
+
+    /**
+     * 被点赞文档名称
+     */
+    @TableField(value = "documentName")
+    private String documentName;
+
 
     @TableField(exist = false)
     private static final long serialVersionUID = 1L;

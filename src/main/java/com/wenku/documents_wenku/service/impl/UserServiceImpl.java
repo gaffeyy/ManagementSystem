@@ -1,16 +1,21 @@
 package com.wenku.documents_wenku.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.wenku.documents_wenku.common.BusinessErrors;
 import com.wenku.documents_wenku.constant.Constant;
 import com.wenku.documents_wenku.constant.RedisConstant;
 import com.wenku.documents_wenku.exception.BusinessException;
+import com.wenku.documents_wenku.mapper.DocumentMapper;
 import com.wenku.documents_wenku.mapper.UsercollectMapper;
+import com.wenku.documents_wenku.model.domain.Document;
 import com.wenku.documents_wenku.model.domain.User;
 import com.wenku.documents_wenku.model.domain.Usercollect;
+import com.wenku.documents_wenku.service.DocumentService;
 import com.wenku.documents_wenku.service.UserService;
 import com.wenku.documents_wenku.mapper.UserMapper;
+import com.wenku.documents_wenku.service.UsercollectService;
 import com.wenku.documents_wenku.utils.CookieUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
@@ -22,6 +27,7 @@ import javax.annotation.Resource;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.List;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 
@@ -44,6 +50,15 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
 
 	@Resource
 	private CookieUtils cookieUtils;
+
+	@Resource
+	private DocumentService documentService;
+
+	@Resource
+	private DocumentMapper documentMapper;
+
+	@Resource
+	UsercollectService usercollectService;
 
 	@Resource
 	private RedisTemplate<String,Object> redisTemplate;
@@ -228,8 +243,20 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
 		Usercollect usercollect = new Usercollect();
 		usercollect.setUserId(userId);
 		usercollect.setDocumentId(documentId);
+		Document document = documentMapper.selectById(documentId);
+		usercollect.setDocumentUrl(document.getDucomentUrl());
 		usercollectMapper.insert(usercollect);
 		return documentId;
+	}
+
+	@Override
+	public Page<Usercollect> getCollect(Long userId, long pageNum, long pageSize) {
+		QueryWrapper<Usercollect> queryWrapper = new QueryWrapper<>();
+		queryWrapper.select("documentName","documentUrl");
+//		queryWrapper.select("documentUrl");
+		queryWrapper.eq("userId",userId);
+		Page<Usercollect> collectPage = usercollectService.page(new Page<>(pageNum,pageSize),queryWrapper);
+		return collectPage;
 	}
 
 	public User getSafetyUser(User user){
