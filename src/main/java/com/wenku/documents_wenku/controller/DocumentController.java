@@ -187,6 +187,27 @@ public class DocumentController {
 	}
 
 	/**
+	 * 根据种类查询文档
+	 * @param request
+	 * @param category
+	 * @param pageNum
+	 * @param pageSize
+	 * @return
+	 */
+	@PostMapping("/searchByCategory")
+	public BaseResponse<Page<Document>> searchDocumentByCategory(HttpServletRequest request,@RequestParam("category") String category,@RequestParam("pageNum") long pageNum,
+																 @RequestParam("pageSize") long pageSize){
+		if( category == null || pageNum < 1L || pageSize < 1L){
+			//请求参数错误
+			throw new BusinessException(BusinessErrors.PARAMS_ERROR);
+		}
+		String categoryDoc = category;
+		Page<Document> documentPage = documentService.searchDocumentByCategory(category,pageNum,pageSize);
+		return ResultUtils.success(documentPage,"查询成功");
+
+	}
+
+	/**
 	 * 文档推荐接口
 	 *
 	 * @param request

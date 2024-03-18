@@ -53,7 +53,7 @@ public class InsertTest {
 				document.setDocumentName("1-批量插入测试文档");
 				document.setCategory("图书");
 				document.setUploadUserId(1L);
-				document.setDucomentUrl("http://document.com");
+				document.setDocumentUrl("http://document.com");
 				document.setTags("[Tags]");
 				document.setLikes(l);
 				document.setBrowser(l);

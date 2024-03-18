@@ -180,6 +180,13 @@ public class UserController {
 		return ResultUtils.success(l,"收藏成功");
 	}
 
+	/**
+	 * 获取收藏接口
+	 * @param request
+	 * @param pageSize
+	 * @param pageNum
+	 * @return 收藏文档名和URL
+	 */
 	@PostMapping("/getCollect")
 	public BaseResponse<Page<Usercollect>> getCollect(HttpServletRequest request,@RequestParam("pageSize") Long pageSize,@RequestParam("pageNum") Long pageNum){
 		if(pageNum==null || pageSize==null){

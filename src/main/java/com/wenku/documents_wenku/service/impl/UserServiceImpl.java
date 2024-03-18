@@ -244,7 +244,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
 		usercollect.setUserId(userId);
 		usercollect.setDocumentId(documentId);
 		Document document = documentMapper.selectById(documentId);
-		usercollect.setDocumentUrl(document.getDucomentUrl());
+		usercollect.setDocumentUrl(document.getDocumentUrl());
 		usercollectMapper.insert(usercollect);
 		return documentId;
 	}

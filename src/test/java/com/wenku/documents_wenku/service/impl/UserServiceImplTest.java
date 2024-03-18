@@ -1,5 +1,6 @@
 package com.wenku.documents_wenku.service.impl;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.wenku.documents_wenku.mapper.UsercollectMapper;
 import com.wenku.documents_wenku.model.domain.Usercollect;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.data.redis.core.script.ScriptExecutor;
@@ -209,13 +210,16 @@ class UserServiceImplTest {
 		System.out.println(list);
 	}
 
-//	@Test
-//	void getCollect() {
-//		long start = System.currentTimeMillis();
-//		Long uid = 70L;
+	@Resource
+	private UsercollectMapper usercollectMapper;
+	@Test
+	void getCollect() {
+		long start = System.currentTimeMillis();
+		Long uid = 70L;
 //		List<Usercollect> usercollectPage = userService.getCollect(uid, 10, 10);
-////		System.out.println(usercollectPage.toString());
-//		long end = System.currentTimeMillis();
-//		System.out.println(end - start);
-//	}
+//		System.out.println(usercollectPage.toString());
+		usercollectMapper.searchCollect(uid);
+		long end = System.currentTimeMillis();
+		System.out.println(end - start);
+	}
 }

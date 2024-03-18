@@ -69,6 +69,15 @@ public interface DocumentService extends IService<Document> {
 	 */
 	public Page<Document> searchDocumentByTags(String tags,long pageNum,long pageSize);
 
+	/**
+	 * 通过类型查询
+	 * @param category
+	 * @param pageNum
+	 * @param pageSize
+	 * @return
+	 */
+	public Page<Document> searchDocumentByCategory(String category,long pageNum,long pageSize);
+
 
 	/**
 	 * 上传文件

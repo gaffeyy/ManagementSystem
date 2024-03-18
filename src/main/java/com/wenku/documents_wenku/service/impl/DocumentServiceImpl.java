@@ -14,7 +14,6 @@ import com.wenku.documents_wenku.mapper.DocumentMapper;
 import com.wenku.documents_wenku.utils.FtpUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
-import org.redisson.api.RList;
 import org.redisson.api.RedissonClient;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
@@ -55,7 +54,7 @@ public class DocumentServiceImpl extends ServiceImpl<DocumentMapper, Document>
 		addDocument.setCategory(category);
 		addDocument.setUploadUserId(uploadUser);
 		addDocument.setTags(tags);
-		addDocument.setDucomentUrl(documentUrl);
+		addDocument.setDocumentUrl(documentUrl);
 		boolean savedState = this.save(addDocument);
 		if(savedState){
 			//添加成功
@@ -76,6 +75,7 @@ public class DocumentServiceImpl extends ServiceImpl<DocumentMapper, Document>
 	@Override
 	public Page<Document> searchDocumentByName(String documentName, long pageNum, long pageSize) {
 		QueryWrapper<Document> queryWrapper = new QueryWrapper<>();
+		queryWrapper.select("documentName","documentUrl");
 		queryWrapper.like("documentName",documentName);
 		Page<Document> searchPage = this.page(new Page<>(pageNum, pageSize), queryWrapper);
 //		List<Document> searchedDocuments = documentMapper.selectList(queryWrapper);
@@ -90,6 +90,7 @@ public class DocumentServiceImpl extends ServiceImpl<DocumentMapper, Document>
 	@Override
 	public Document searchDocumentById(long documentId) {
 		QueryWrapper<Document> queryWrapper = new QueryWrapper<>();
+		queryWrapper.select("documentName","documentUrl","uploadUser");
 		queryWrapper.eq("documentId",documentId);
 		Document selectedDocument = documentMapper.selectOne(queryWrapper);
 		if(selectedDocument == null){
@@ -108,6 +109,15 @@ public class DocumentServiceImpl extends ServiceImpl<DocumentMapper, Document>
 		queryWrapper.like("tags",tags);
 		List<Document> selectedDocuments = documentMapper.selectList(queryWrapper);
 		Page<Document> documentPage = this.page(new Page<>(pageNum, pageSize), queryWrapper);
+		return documentPage;
+	}
+
+	@Override
+	public Page<Document> searchDocumentByCategory(String category, long pageNum, long pageSize) {
+		QueryWrapper<Document> queryWrapper = new QueryWrapper<>();
+		queryWrapper.select("documentName","documentUrl");
+		queryWrapper.eq("category",category);
+		Page<Document> documentPage = this.page(new Page<>(pageNum,pageSize),queryWrapper);
 		return documentPage;
 	}
 
@@ -171,7 +181,7 @@ public class DocumentServiceImpl extends ServiceImpl<DocumentMapper, Document>
 //		safetyDoc.setUploadUserId(0L);
 //		safetyDoc.setUploadTime(new Date());
 //		safetyDoc.setIsDelete(0);
-		safetyDoc.setDucomentUrl(document.getDucomentUrl());
+		safetyDoc.setDocumentUrl(document.getDocumentUrl());
 		safetyDoc.setTags(document.getTags());
 		safetyDoc.setLikes(document.getLikes());
 		safetyDoc.setBrowser(document.getBrowser());

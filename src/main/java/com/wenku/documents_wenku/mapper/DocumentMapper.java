@@ -20,6 +20,9 @@ public interface DocumentMapper extends BaseMapper<Document> {
 	
 	@Update("update document set likes = #{likes}, browser = #{browser} where documentId = #{documentId}")
 	public boolean updateLikesAndBrowser(@Param("likes") Long likes,@Param("browser") Long browser,@Param("documentId") Long documentId);
+
+	@Select("select documentName,documentUrl from document  where category = #{category}")
+	public List<Document> getCategoryDocuments(@Param("category") String category);
 }
 
 

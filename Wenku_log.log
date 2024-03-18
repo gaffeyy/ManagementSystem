@@ -16,3 +16,29 @@
 2024-03-18 09:17:59.514  INFO 18684 --- [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
 2024-03-18 09:17:59.539  INFO 18684 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8080 (http) with context path ''
 2024-03-18 09:17:59.550  INFO 18684 --- [restartedMain] c.w.d.DocumentsWenKuApplication          : Started DocumentsWenKuApplication in 3.508 seconds (JVM running for 6.118)
+2024-03-18 09:50:54.436  INFO 16956 --- [main] c.w.d.service.impl.UserServiceImplTest   : Starting UserServiceImplTest using Java 17.0.9 on LAPTOP-gaffey with PID 16956 (started by gaffey in D:\Intellji IDEA\Documents_WenKu\Documents_WenKu)
+2024-03-18 09:50:54.438  INFO 16956 --- [main] c.w.d.service.impl.UserServiceImplTest   : No active profile set, falling back to 1 default profile: "default"
+2024-03-18 09:50:55.144  INFO 16956 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode!
+2024-03-18 09:50:55.148  INFO 16956 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2024-03-18 09:50:55.180  INFO 16956 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 15 ms. Found 0 Redis repository interfaces.
+2024-03-18 09:50:56.563  INFO 16956 --- [main] org.redisson.Version                     : Redisson 3.17.5
+2024-03-18 09:50:56.926  INFO 16956 --- [redisson-netty-2-9] o.r.c.pool.MasterPubSubConnectionPool    : 1 connections initialized for 1.14.1.82/1.14.1.82:6379
+2024-03-18 09:50:57.122  INFO 16956 --- [redisson-netty-2-19] o.r.c.pool.MasterConnectionPool          : 24 connections initialized for 1.14.1.82/1.14.1.82:6379
+2024-03-18 09:50:58.444  INFO 16956 --- [main] c.w.d.service.impl.UserServiceImplTest   : Started UserServiceImplTest in 4.379 seconds (JVM running for 5.689)
+2024-03-18 09:50:58.947  INFO 16956 --- [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2024-03-18 09:50:59.324  INFO 16956 --- [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2024-03-18 09:50:59.466  INFO 16956 --- [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2024-03-18 09:50:59.518  INFO 16956 --- [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+2024-03-18 09:51:51.001  INFO 25188 --- [main] c.w.d.service.impl.UserServiceImplTest   : Starting UserServiceImplTest using Java 17.0.9 on LAPTOP-gaffey with PID 25188 (started by gaffey in D:\Intellji IDEA\Documents_WenKu\Documents_WenKu)
+2024-03-18 09:51:51.002  INFO 25188 --- [main] c.w.d.service.impl.UserServiceImplTest   : No active profile set, falling back to 1 default profile: "default"
+2024-03-18 09:51:51.547  INFO 25188 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode!
+2024-03-18 09:51:51.549  INFO 25188 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2024-03-18 09:51:51.574  INFO 25188 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 13 ms. Found 0 Redis repository interfaces.
+2024-03-18 09:51:52.605  INFO 25188 --- [main] org.redisson.Version                     : Redisson 3.17.5
+2024-03-18 09:51:52.903  INFO 25188 --- [redisson-netty-2-9] o.r.c.pool.MasterPubSubConnectionPool    : 1 connections initialized for 1.14.1.82/1.14.1.82:6379
+2024-03-18 09:51:53.110  INFO 25188 --- [redisson-netty-2-19] o.r.c.pool.MasterConnectionPool          : 24 connections initialized for 1.14.1.82/1.14.1.82:6379
+2024-03-18 09:51:54.119  INFO 25188 --- [main] c.w.d.service.impl.UserServiceImplTest   : Started UserServiceImplTest in 3.433 seconds (JVM running for 4.358)
+2024-03-18 09:51:54.458  INFO 25188 --- [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2024-03-18 09:51:54.731  INFO 25188 --- [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2024-03-18 09:51:54.892  INFO 25188 --- [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2024-03-18 09:51:54.925  INFO 25188 --- [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
