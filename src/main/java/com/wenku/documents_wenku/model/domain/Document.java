@@ -53,8 +53,8 @@ public class Document implements Serializable {
     /**
      * 文档URL
      */
-    @TableField(value = "ducomentUrl")
-    private String ducomentUrl;
+    @TableField(value = "documentUrl")
+    private String documentUrl;
 
     /**
      * 文档标签（JSON列表）

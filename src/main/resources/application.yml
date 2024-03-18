@@ -36,9 +36,9 @@ mybatis-plus:
   #    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
   global-config:
     db-config:
-      logic-delete-field: isDelete # ????????????(since 3.3.0,????????????2)
-      logic-delete-value: 1 # ??????(??? 1)
-      logic-not-delete-value: 0 # ??????(??? 0)
+      logic-delete-field: isDelete
+      logic-delete-value: 1
+      logic-not-delete-value: 0
 
 ftp:
   hostname: 1.14.1.82
@@ -49,11 +49,3 @@ logging:
   file:
     name: Wenku_log.log
 
-
-server:
-  port: 8080
-  servlet:
-    context-path: /api
-    session:
-      cookie:
-        domain:

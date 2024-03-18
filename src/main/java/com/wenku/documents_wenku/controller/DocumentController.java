@@ -199,16 +199,16 @@ public class DocumentController {
 		return ResultUtils.success(documents1,"查询成功");
 	}
 
-//	/**
-//	 * 测试接口
-//	 * @param request
-//	 * @return
-//	 */
-//	@GetMapping("/recomendtest")
-//	public BaseResponse<List<Document>> recommendTest(HttpServletRequest request){
-//				List<Document> documents = documentService.recommednDocument();
-////		List<Document> documents1 = documentService.redommendFromRedis();
-//		return ResultUtils.success(documents,"查询成功");
-//	}
+	/**
+	 * 测试接口
+	 * @param request
+	 * @return
+	 */
+	@GetMapping("/recomendtest")
+	public BaseResponse<List<Document>> recommendTest(HttpServletRequest request){
+				List<Document> documents = documentService.recommednDocument();
+//		List<Document> documents1 = documentService.redommendFromRedis();
+		return ResultUtils.success(documents,"查询成功");
+	}
 
 }
